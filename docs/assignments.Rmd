@@ -1,0 +1,145 @@
+---
+title: "Assignments"
+author: "Charlotte Chang"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+# Overview
+
+To ensure that you can make progress on this interdisciplinary laboratory project in a timely fashion, I have developed the following assignments to create checkpoints toward producing a final report on environmental social media communications.
+
+# Assignment 1
+
+In this mini-report (1-3 pages), you will **describe your dataset and hypotheses**. This report is intended to help you progress toward a) identifying a tractable and interesting research question and b) gathering sufficient data in a principled fashion.
+
+*Notes on terms*
+
+Below, *site* refers to a social media platform (e.g. Instagram, Twitter, Facebook). A *post* refers to each individual datum, which would be a social media post. For example, each of these posts would be one data point: [Vanessa Nakate's IG post advocating for decarbonization](https://www.instagram.com/p/CFjzQK8Bh82/); a [Cato Institute Twitter post seeking to recast public lands into a political controversy](https://twitter.com/CatoInstitute/status/1008883823826866176); [Reddit post that touches on overfishing and consumer dietary choices](https://www.reddit.com/r/EatCheapAndHealthy/comments/j36g68/dont_pass_up_on_sardines/).
+
+To perform this assignment, you will:
+
+1) identify an issue or pair/set of issues as well as which site(s) that you plan to examine;
+2) describe how public mobilization or awareness is important for that issue (1-2 paragraphs);
+    + some issues (e.g. mathematical proofs of the existence of trustworthy quantum computing, the ON bipolar cell behavior of vertebrate retinas) may lack a clear constituency or intersection with public deliberation, while other--sometimes related--issues have prominent feedbacks with public discourse (e.g. the role of artificial intelligence in society, prioritizing funding for (biomedical) research).
+3) describe the hypotheses that you plan to test with your social media data;
+    + please make sure that you explain your `dependent` (a.k.a. `response`) variable, which could be the number of likes, your personal score for message efficacy, or some other metric, as well as the `independent` (a.k.a. `predictor`) variables.
+        - for example, let's say I was interested in quantifying the impact of platform and message sentiment on the number of likes for posts describing overfishing. My dependent variable would be number of favorites/likes, as a proxy for public attention, and my independent variables would be platform (e.g. Twitter or Reddit) and post sentiment.
+4) state why you chose a particular site or set of sites;
+5) enumerate the search terms that you have used;
+    + please note if the terms differ across site(s);
+    + if you decide to compare two or more issues, please be clear about which search terms correspond to which issue.
+    + please briefly justify why you have chosen particular terms. For some issues, omitting or including certain hashtags will be key to your analysis (e.g. to find climate deniers, you may want to iteratively source terms related to "climate hoax") 
+6) demonstrate that you can successfully interact with your Google sheet data.
+
+## Rubric
+
+This assignment will be worth $30$ points.
+
+* Data quantity - please provide a shared link to your Google sheet for your data:
+    + 0-1 points: No or very few posts collected with substantial data quality issues (<10)
+    + 2 points: Few posts collected ($\leq 20$)
+    + 3 points: Some posts collected ($\leq 25$)
+    + 4 points: Satisfactory quantity of posts collected ($\leq 30$)
+    + 5 points: Sufficient number of posts collected ($\geq 30$) with evenness across issues and/or sites 
+        - e.g.: a total of 30 posts for organophosphate pollution, with an even division of 15 posts on site 1 and 15 posts on site 2.
+        - or: a total of 30 posts for two issues discussed on Instagram, with 15 posts for each issue.
+* Data gathering process
+    + 0-1: No description of search terms/search process
+    + 2: Unclear description of search process
+    + 3: Satisfactory description of search process
+    + 4: Strong description of search process
+    + 5: Excellent description of search process
+* Description of issue:
+    + 0-1: No description of environmental issue or why public discourse/deliberation is important to this issue
+    + 2: Limited description of issue and significance of public discourse
+    + 3: Emerging description of issue and public discourse
+    + 4: Clear description of issue and why discourse of this issue is important
+    + 5: Compelling description of issue and discourse
+            - i.e.: as a reader, it is very clear to me that making progress toward some issue relies on public opinion, or the issue is embroiled in controversy, etc.
+* Hypothesis:
+    + 0-1: No rationale for your hypothesis or confusing hypothesis; no rationale for why you selected the platforms and issues that you chose
+    + 2: Limited insight into your hypothesis and issue-platform choice
+    + 3: Emerging insight into your hypothesis and issue-platform choice
+    + 4: Clear insight for both hypothesis/hypotheses and issue-platform choice
+    + 5: Excellent description of hypothesis or hypotheses and issue-platform choice
+* Progress toward analysis:
+    + 0-1: No evidence that you have interacted with your data in `R`; limited or non-existent justification of independent and dependent variables
+    + 2-3: Limited evidence of interacting with data and/or limited justification of variables
+    + 4-5: Clear demonstration that you have interacted with your data and strong justification of variables
+    
+# Assignment 2
+
+You will create a succinct and clear outline to make progress toward your lab report. Note that this document will be graded for participation. However, Marc and I will be able to provide more helpful comments if you are careful and clear in your outline. There is no need to be excessively wordy with your outline. Nonetheless, if we do not understand an assumption that you have made, we will not be able to provide very helpful feedback if you build on that assumption in your analyses or some other component of your report.
+
+## Suggested outline structure
+
+Please feel free to adopt this structure or come up with a different bullet-point outline as you see fit. Please make sure that you either write this in `MS Word` or some other text editor or write it in an `R Markdown` file that is knit to `.docx`.
+
+* Background
+    + Why is this environmental issue important?
+    + What is the current state of public awareness, discourse, deliberation, voting preferences, or some other public behavior toward this issue?
+        - If appropriate, please feel free to include citations in your bullet point outline
+    + Why have you chosen your combination of issue(s) and/or site(s)?
+    + What question do you seek to answer with your data? (What are your hypotheses? Why are they important/useful?) How will your insights improve environmental communication practices on social media?
+* Analysis
+    + What variables do you plan to examine? If the variables are ones that you have created (e.g. your own metric of virality or persuasive force), why did you choose to create this variable and how did you operationalize it into a metric that you could apply in a standardized way across your posts?
+    + Brief description of data
+    + Description of planned analyses
+* Interpretation
+    + What do you expect to find? (This may reiterate your alternative hypothesis - no worries.)
+    + How do you plan to interpret your findings? What outputs will you use from your statistical models? What does a positive or negative coefficient estimate mean? *OR*: Describe your findings and interpret them.
+* Conclusion: Implications for environmental communications
+    + What are your take-aways from your analysis?
+    + What recommendations do you have for improving environmental communication based on your data? (Even if your results are all non-significant, that is fine. From exploring these data in a more systematic way, what are your new insights for environmental advocates?)
+    + What would you prioritize in terms of future research efforts in the realm of environmental communication?
+    
+## Grading
+
+You will receive 10 points if you submit your outline in a timely fashion. Note that a clearer outline will permit us to provide more helpful feedback. (The outline does not need to be long to be clear!)
+
+# Final assignment
+
+You will write a technical report (5 page limit) describing your findings on environmental social media communications. You will conclude your report with recommendations for future research and/or recommendations for communications focused on that topic.
+
+The final assignment will be a total of $60$ points. For the analysis, you are welcome to include a plot if you would like, or you can report the coefficients of your model in a table or in text.
+
+## Rubric
+
+* Data integrity & collation:
+    + 0-2 points: No or very few posts collected with substantial data quality issues (<10)
+    + 3-4 points: Limited number of posts with unclear sampling procedure
+    + 5-6 points: Minimally acceptable number of posts collected with inadequately justified sampling procedure
+    + 7-8 points: Satisfactory data quantity and acceptable sampling procedure
+    + 9-10 points: Large quantity of data with well-justified sampling procedure
+* Background:
+    + 0-2: Unclear or extremely minimal background on environmental issue and justification for the role of public deliberation regarding that issue
+    + 3-4: Limited description of issue and significance of public discourse
+    + 5-6: Emerging description of issue and public discourse
+    + 7-8: Clear description of issue and why discourse of this issue is important
+    + 9-10: Compelling description of issue and discourse, strong and direct link to hypothesis
+* Evidentiary basis:
+    + 0-2: No past research cited
+    + 3-4: Research cited is of limited relevance and/or limited quantity (1 paper)
+    + 5-6: Emerging evidence base for issue and the role of public deliberation or context for interpretation (2 papers)
+    + 7-8: Good evidence base for background and discussion/conclusion (3-4 papers)
+    + 9-10: Excellent evidence base for issue and interpretation of analyses (5+ papers)
+            - NB: paper here means peer-reviewed study or formal gray literature (e.g. Pew/NGO/think tanks like RAND Corp. technical report rather than a less formal mainstream newspaper/magazine article).
+* Analysis - hypothesis & data justification:
+    + 0-2: No rationale for your hypothesis or confusing hypothesis; no rationale for why you selected the platforms and issues that you chose
+    + 3-4: Limited insight into your hypothesis and issue-platform choice
+    + 5-6: Emerging insight into your hypothesis and issue-platform choice
+    + 7-8: Clear insight for both hypothesis/hypotheses and issue-platform choice
+    + 9-10: Excellent description of hypothesis or hypotheses and issue-platform choice
+* Analysis - rigor & interpretation:
+    + 0-2: Analysis or interpretation of analysis is missing
+    + 3-4: Analysis or interpretation is confusing or incorrect
+    + 5-6: Analysis and interpretation are slightly incorrect or described in a confusing fashion
+    + 7-8: Analysis and interpretation are clear and generally sound
+    + 9-10: Excellence in analysis and interpretation
+* Discussion & conclusions:
+    + 0-2: No discussion and no interpretation of your findings for future environmental communications research
+    + 3-4: Discussion has severe factual mistakes with no implications for future work
+    + 5-6: Discussion is unclear and some limited implications for future work
+    + 7-8: Discussion is clearly written and you provide clear guidance for future research priorities or recommendations to improve environmental social media communications
+    + 9-10: Discussion is compelling and you provide excellent and exciting guidance for future work

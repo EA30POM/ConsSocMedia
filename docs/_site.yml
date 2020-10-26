@@ -1,0 +1,16 @@
+name: "EA30-FA20"
+output_dir: "."
+navbar:
+  title: "Project 3: Environmental social media communications"
+  left:
+    - text: "Overview"
+      icon: fa-home
+      href: index.html
+    - text: "Assignments"
+      icon: fa-file-alt
+      href: assignments.html
+output:
+  html_document:
+    theme: flatly
+    css: style.css
+    number_sections: true

@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Charlotte Chang" />
+
+<meta name="date" content="2020-10-25" />
+
+<title>Assignments</title>
+
+<script src="site_libs/header-attrs-2.3/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h2 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h3 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h4 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h5 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h6 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Project 3: Environmental social media communications</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Overview
+  </a>
+</li>
+<li>
+  <a href="assignments.html">
+    <span class="fa fa-file-alt"></span>
+     
+    Assignments
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Assignments</h1>
+<h4 class="author">Charlotte Chang</h4>
+<h4 class="date">2020-10-25</h4>
+
+</div>
+
+
+<div id="overview" class="section level1" number="1">
+<h1 number="1"><span class="header-section-number">1</span> Overview</h1>
+<p>To ensure that you can make progress on this interdisciplinary laboratory project in a timely fashion, I have developed the following assignments to create checkpoints toward producing a final report on environmental social media communications.</p>
+</div>
+<div id="assignment-1" class="section level1" number="2">
+<h1 number="2"><span class="header-section-number">2</span> Assignment 1</h1>
+<p>In this mini-report (1-3 pages), you will <strong>describe your dataset and hypotheses</strong>. This report is intended to help you progress toward a) identifying a tractable and interesting research question and b) gathering sufficient data in a principled fashion.</p>
+<p><em>Notes on terms</em></p>
+<p>Below, <em>site</em> refers to a social media platform (e.g. Instagram, Twitter, Facebook). A <em>post</em> refers to each individual datum, which would be a social media post. For example, each of these posts would be one data point: <a href="https://www.instagram.com/p/CFjzQK8Bh82/">Vanessa Nakate’s IG post advocating for decarbonization</a>; a <a href="https://twitter.com/CatoInstitute/status/1008883823826866176">Cato Institute Twitter post seeking to recast public lands into a political controversy</a>; <a href="https://www.reddit.com/r/EatCheapAndHealthy/comments/j36g68/dont_pass_up_on_sardines/">Reddit post that touches on overfishing and consumer dietary choices</a>.</p>
+<p>To perform this assignment, you will:</p>
+<ol style="list-style-type: decimal">
+<li>identify an issue or pair/set of issues as well as which site(s) that you plan to examine;</li>
+<li>describe how public mobilization or awareness is important for that issue (1-2 paragraphs);
+<ul>
+<li>some issues (e.g. mathematical proofs of the existence of trustworthy quantum computing, the ON bipolar cell behavior of vertebrate retinas) may lack a clear constituency or intersection with public deliberation, while other–sometimes related–issues have prominent feedbacks with public discourse (e.g. the role of artificial intelligence in society, prioritizing funding for (biomedical) research).</li>
+</ul></li>
+<li>describe the hypotheses that you plan to test with your social media data;
+<ul>
+<li>please make sure that you explain your <code>dependent</code> (a.k.a. <code>response</code>) variable, which could be the number of likes, your personal score for message efficacy, or some other metric, as well as the <code>independent</code> (a.k.a. <code>predictor</code>) variables.
+<ul>
+<li>for example, let’s say I was interested in quantifying the impact of platform and message sentiment on the number of likes for posts describing overfishing. My dependent variable would be number of favorites/likes, as a proxy for public attention, and my independent variables would be platform (e.g. Twitter or Reddit) and post sentiment.</li>
+</ul></li>
+</ul></li>
+<li>state why you chose a particular site or set of sites;</li>
+<li>enumerate the search terms that you have used;
+<ul>
+<li>please note if the terms differ across site(s);</li>
+<li>if you decide to compare two or more issues, please be clear about which search terms correspond to which issue.</li>
+<li>please briefly justify why you have chosen particular terms. For some issues, omitting or including certain hashtags will be key to your analysis (e.g. to find climate deniers, you may want to iteratively source terms related to “climate hoax”)</li>
+</ul></li>
+<li>demonstrate that you can successfully interact with your Google sheet data.</li>
+</ol>
+<div id="rubric" class="section level2" number="2.1">
+<h2 number="2.1"><span class="header-section-number">2.1</span> Rubric</h2>
+<p>This assignment will be worth <span class="math inline">\(30\)</span> points.</p>
+<ul>
+<li>Data quantity - please provide a shared link to your Google sheet for your data:
+<ul>
+<li>0-1 points: No or very few posts collected with substantial data quality issues (&lt;10)</li>
+<li>2 points: Few posts collected (<span class="math inline">\(\leq 20\)</span>)</li>
+<li>3 points: Some posts collected (<span class="math inline">\(\leq 25\)</span>)</li>
+<li>4 points: Satisfactory quantity of posts collected (<span class="math inline">\(\leq 30\)</span>)</li>
+<li>5 points: Sufficient number of posts collected (<span class="math inline">\(\geq 30\)</span>) with evenness across issues and/or sites
+<ul>
+<li>e.g.: a total of 30 posts for organophosphate pollution, with an even division of 15 posts on site 1 and 15 posts on site 2.</li>
+<li>or: a total of 30 posts for two issues discussed on Instagram, with 15 posts for each issue.</li>
+</ul></li>
+</ul></li>
+<li>Data gathering process
+<ul>
+<li>0-1: No description of search terms/search process</li>
+<li>2: Unclear description of search process</li>
+<li>3: Satisfactory description of search process</li>
+<li>4: Strong description of search process</li>
+<li>5: Excellent description of search process</li>
+</ul></li>
+<li>Description of issue:
+<ul>
+<li>0-1: No description of environmental issue or why public discourse/deliberation is important to this issue</li>
+<li>2: Limited description of issue and significance of public discourse</li>
+<li>3: Emerging description of issue and public discourse</li>
+<li>4: Clear description of issue and why discourse of this issue is important</li>
+<li>5: Compelling description of issue and discourse - i.e.: as a reader, it is very clear to me that making progress toward some issue relies on public opinion, or the issue is embroiled in controversy, etc.</li>
+</ul></li>
+<li>Hypothesis:
+<ul>
+<li>0-1: No rationale for your hypothesis or confusing hypothesis; no rationale for why you selected the platforms and issues that you chose</li>
+<li>2: Limited insight into your hypothesis and issue-platform choice</li>
+<li>3: Emerging insight into your hypothesis and issue-platform choice</li>
+<li>4: Clear insight for both hypothesis/hypotheses and issue-platform choice</li>
+<li>5: Excellent description of hypothesis or hypotheses and issue-platform choice</li>
+</ul></li>
+<li>Progress toward analysis:
+<ul>
+<li>0-1: No evidence that you have interacted with your data in <code>R</code>; limited or non-existent justification of independent and dependent variables</li>
+<li>2-3: Limited evidence of interacting with data and/or limited justification of variables</li>
+<li>4-5: Clear demonstration that you have interacted with your data and strong justification of variables</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="assignment-2" class="section level1" number="3">
+<h1 number="3"><span class="header-section-number">3</span> Assignment 2</h1>
+<p>You will create a succinct and clear outline to make progress toward your lab report. Note that this document will be graded for participation. However, Marc and I will be able to provide more helpful comments if you are careful and clear in your outline. There is no need to be excessively wordy with your outline. Nonetheless, if we do not understand an assumption that you have made, we will not be able to provide very helpful feedback if you build on that assumption in your analyses or some other component of your report.</p>
+<div id="suggested-outline-structure" class="section level2" number="3.1">
+<h2 number="3.1"><span class="header-section-number">3.1</span> Suggested outline structure</h2>
+<p>Please feel free to adopt this structure or come up with a different bullet-point outline as you see fit. Please make sure that you either write this in <code>MS Word</code> or some other text editor or write it in an <code>R Markdown</code> file that is knit to <code>.docx</code>.</p>
+<ul>
+<li>Background
+<ul>
+<li>Why is this environmental issue important?</li>
+<li>What is the current state of public awareness, discourse, deliberation, voting preferences, or some other public behavior toward this issue?
+<ul>
+<li>If appropriate, please feel free to include citations in your bullet point outline</li>
+</ul></li>
+<li>Why have you chosen your combination of issue(s) and/or site(s)?</li>
+<li>What question do you seek to answer with your data? (What are your hypotheses? Why are they important/useful?) How will your insights improve environmental communication practices on social media?</li>
+</ul></li>
+<li>Analysis
+<ul>
+<li>What variables do you plan to examine? If the variables are ones that you have created (e.g. your own metric of virality or persuasive force), why did you choose to create this variable and how did you operationalize it into a metric that you could apply in a standardized way across your posts?</li>
+<li>Brief description of data</li>
+<li>Description of planned analyses</li>
+</ul></li>
+<li>Interpretation
+<ul>
+<li>What do you expect to find? (This may reiterate your alternative hypothesis - no worries.)</li>
+<li>How do you plan to interpret your findings? What outputs will you use from your statistical models? What does a positive or negative coefficient estimate mean? <em>OR</em>: Describe your findings and interpret them.</li>
+</ul></li>
+<li>Conclusion: Implications for environmental communications
+<ul>
+<li>What are your take-aways from your analysis?</li>
+<li>What recommendations do you have for improving environmental communication based on your data? (Even if your results are all non-significant, that is fine. From exploring these data in a more systematic way, what are your new insights for environmental advocates?)</li>
+<li>What would you prioritize in terms of future research efforts in the realm of environmental communication?</li>
+</ul></li>
+</ul>
+</div>
+<div id="grading" class="section level2" number="3.2">
+<h2 number="3.2"><span class="header-section-number">3.2</span> Grading</h2>
+<p>You will receive 10 points if you submit your outline in a timely fashion. Note that a clearer outline will permit us to provide more helpful feedback. (The outline does not need to be long to be clear!)</p>
+</div>
+</div>
+<div id="final-assignment" class="section level1" number="4">
+<h1 number="4"><span class="header-section-number">4</span> Final assignment</h1>
+<p>You will write a technical report (5 page limit) describing your findings on environmental social media communications. You will conclude your report with recommendations for future research and/or recommendations for communications focused on that topic.</p>
+<p>The final assignment will be a total of <span class="math inline">\(60\)</span> points. For the analysis, you are welcome to include a plot if you would like, or you can report the coefficients of your model in a table or in text.</p>
+<div id="rubric-1" class="section level2" number="4.1">
+<h2 number="4.1"><span class="header-section-number">4.1</span> Rubric</h2>
+<ul>
+<li>Data integrity &amp; collation:
+<ul>
+<li>0-2 points: No or very few posts collected with substantial data quality issues (&lt;10)</li>
+<li>3-4 points: Limited number of posts with unclear sampling procedure</li>
+<li>5-6 points: Minimally acceptable number of posts collected with inadequately justified sampling procedure</li>
+<li>7-8 points: Satisfactory data quantity and acceptable sampling procedure</li>
+<li>9-10 points: Large quantity of data with well-justified sampling procedure</li>
+</ul></li>
+<li>Background:
+<ul>
+<li>0-2: Unclear or extremely minimal background on environmental issue and justification for the role of public deliberation regarding that issue</li>
+<li>3-4: Limited description of issue and significance of public discourse</li>
+<li>5-6: Emerging description of issue and public discourse</li>
+<li>7-8: Clear description of issue and why discourse of this issue is important</li>
+<li>9-10: Compelling description of issue and discourse, strong and direct link to hypothesis</li>
+</ul></li>
+<li>Evidentiary basis:
+<ul>
+<li>0-2: No past research cited</li>
+<li>3-4: Research cited is of limited relevance and/or limited quantity (1 paper)</li>
+<li>5-6: Emerging evidence base for issue and the role of public deliberation or context for interpretation (2 papers)</li>
+<li>7-8: Good evidence base for background and discussion/conclusion (3-4 papers)</li>
+<li>9-10: Excellent evidence base for issue and interpretation of analyses (5+ papers) - NB: paper here means peer-reviewed study or formal gray literature (e.g. Pew/NGO/think tanks like RAND Corp. technical report rather than a less formal mainstream newspaper/magazine article).</li>
+</ul></li>
+<li>Analysis - hypothesis &amp; data justification:
+<ul>
+<li>0-2: No rationale for your hypothesis or confusing hypothesis; no rationale for why you selected the platforms and issues that you chose</li>
+<li>3-4: Limited insight into your hypothesis and issue-platform choice</li>
+<li>5-6: Emerging insight into your hypothesis and issue-platform choice</li>
+<li>7-8: Clear insight for both hypothesis/hypotheses and issue-platform choice</li>
+<li>9-10: Excellent description of hypothesis or hypotheses and issue-platform choice</li>
+</ul></li>
+<li>Analysis - rigor &amp; interpretation:
+<ul>
+<li>0-2: Analysis or interpretation of analysis is missing</li>
+<li>3-4: Analysis or interpretation is confusing or incorrect</li>
+<li>5-6: Analysis and interpretation are slightly incorrect or described in a confusing fashion</li>
+<li>7-8: Analysis and interpretation are clear and generally sound</li>
+<li>9-10: Excellence in analysis and interpretation</li>
+</ul></li>
+<li>Discussion &amp; conclusions:
+<ul>
+<li>0-2: No discussion and no interpretation of your findings for future environmental communications research</li>
+<li>3-4: Discussion has severe factual mistakes with no implications for future work</li>
+<li>5-6: Discussion is unclear and some limited implications for future work</li>
+<li>7-8: Discussion is clearly written and you provide clear guidance for future research priorities or recommendations to improve environmental social media communications</li>
+<li>9-10: Discussion is compelling and you provide excellent and exciting guidance for future work</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

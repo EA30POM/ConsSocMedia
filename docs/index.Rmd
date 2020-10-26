@@ -1,0 +1,66 @@
+---
+title: "Project 3: Social media and conservation appeals"
+author: "Charlotte Chang"
+date: "`r Sys.Date()`"
+link-citations: yes
+bibliography: /Users/chc02006/Box/Manuscripts/ConservationTwitterversesMS/references.bib
+---
+
+# Background
+
+Social media has been enormously influential. Increasingly, social media affects all domains of public life, ranging from public discourse [@lazer2009life;@allcott2020welfare] to opinion formation among political elites [@freelon2018quantifying] to behavior change [@centola2010spread;@matz2017psychological] and consumer purchasing behavior [@aral2012identifying]. Indeed, social media has now supplanted traditional media as a primary information source [@pew2018socialnews;@allcott2020welfare]. To meet the sustainability challenges of the coming century, environmental advocates realize that they need effective and scalable methods to mobilize public awareness and action. Nevertheless, there is very limited information on **best practices** for effective public communication using social media for environmental issues.
+
+## The state of knowledge for environmental social media
+
+While limited, the emerging field of digital environmental communications shows that social media is a prominent channel for public awareness and could be beneficial for public mobilization. For example, @barrios2020focus evaluated the major conservation issues discussed on Twitter by 10 leading **environmental non-governmental organizations (henceforth, "eNGO")** and sought to quantify which issues received public attention. @schwartz2019visitors used Twitter data within San Francisco, CA, and found that visiting parks was correlated with more positive emotional tone (sentiment) in subsequent posts. @coppock2016treatments worked with the League of Conservation Voters to develop a small experiment, sending tailored Direct Messages to select Twitter followers. They compared if messages describing the follower as an `activist` tended to increase the recipient's probability of taking action by signing a petition. 
+
+These findings indicate that eNGOs could benefit from more structured insights into the environmental interests and communication styles of different audience segments (e.g. followers of Ducks Unlimited or Trout Unlimited versus Sunrise Movement). At present, the majority of eNGOs do not use large scale social media data to crowd-source effective messages or content. The goal of this class project is that you will make a contribution to this emerging field of research and practice by deriving generalizable insights to improve social media environmental communications.
+
+## Environmental communications practices
+
+Recent research highlights that environmental communications could be more effective if they shift toward positive, upbeat emotional tone and tailored messages rather than a "one-size-fits-all" approach focused on "doom and gloom" [@masuda2017comms]. The data that inform these findings typically come from surveys where a researcher interviews a set of respondents. However, @reddy2020conservation report that messages derived from such survey data failed to translate to an online environment for an important outreach campaign focused on working lands conservation. These results suggest that survey responses may differ systematically from social media crowd-sourced data. As such, working directly with social media to draw insights for best practices in online environmental communications is a new priority for eNGOs.
+
+# Assignment
+
+You will write a technical report (5 page limit) describing your findings on environmental social media communications. You will conclude your report with recommendations for future research and/or recommendations for communications focused on that topic. You will perform a comparison of social media data discussing either:
+
+a) 2-3 different environmental issues on 1 or more platforms;
+b) 1 issue across multiple platforms
+
+We will take an expansive definition of environmental issues. While we provide several examples below, these are not prescriptive. **For purposes of this project, we will focus on written messages** rather than (memetic) images or videos.
+
+*Issues*:
+
+As a starting point, you are welcome to focus on one or more of the following issues. If a different environmental topic sparks your interest, you are welcome to pursue it.
+
+* Decarbonization/Climate change mitigation
+* Species conservation
+* Fisheries
+* Outdoor recreation
+* Belief in anthropogenic climate change
+* Pollution
+* Mass transit
+* Water quality
+* Environmental policy (e.g. ballot measures, referenda, Land and Water Conservation Fund)
+* Agriculture
+
+## Project milestones and assignments
+
+* [Assignment 1](https://EA30-FA20.github.io/ConsSocMedia/assignments.html): Describing your dataset and hypotheses (Section **1** in document)
+    + Due: 11/15 at midnight
+* Assignment 2: (Bullet-point) outline for your report
+    + Due: 11/18 at midnight
+* Final assignment: Lab report on environmental social media communications
+    + Due: 12/4 at midnight
+
+# Syllabus for Theme 3 in EA 30
+
+| Week | Class topic   | Lab goals | Notes |
+|------|---------------------|--------------------|------------------------|
+| 11/1 | Wrap-up of air quality and transition to population biology | Select topic(s), site(s), and begin assembling environmental social media data | Marc and I will provide VidGrids with interactive activities in lieu of class meetings. We recognize that many of you will be busy with GOTV and other initiatives during election week, so we will develop asynchronous materials. The lab for project 3 will begin the subsequent week, but note that you can get started by following the instructions to assemble data. |
+| 11/8 | Endangerment, extinction, and ecosystem services | Finalize dataset and begin analysis | |
+| 11/15 | The food, energy, and water nexus | Refine analyses; Write an outline of your analysis and report | [Helpful document from the Pomona College writing center on reverse outlining](https://www.pomona.edu/administration/writing-center/student-resources/general-writing-resources/backwards-outlining); [Templates for writing successful papers](https://www.pomona.edu/administration/writing-center/student-resources/general-writing-resources/templates-writing-successful-paper) | 
+| 11/22 | The food, energy, and water nexus | Finalize analyses; Draft and refine project report | End of classes | 
+
+
+### References
