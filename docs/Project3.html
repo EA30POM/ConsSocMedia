@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Charlotte Chang" />
+
+<meta name="date" content="2020-10-30" />
+
+<title>Fully worked example for Project 3</title>
+
+<script src="site_libs/header-attrs-2.3/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h2 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h3 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h4 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h5 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h6 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Project 3: Environmental social media communications</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Overview
+  </a>
+</li>
+<li>
+  <a href="assignments.html">
+    <span class="fa fa-file-alt"></span>
+     
+    Assignments
+  </a>
+</li>
+<li>
+  <a href="resources.html">
+    <span class="fa fa-question-circle"></span>
+     
+    Resources
+  </a>
+</li>
+<li>
+  <a href="Project3.html">
+    <span class="fa fa-code"></span>
+     
+    Example
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Fully worked example for Project 3</h1>
+<h4 class="author">Charlotte Chang</h4>
+<h4 class="date">2020-10-30</h4>
+
+</div>
+
+
+<div id="code-to-set-up-access-to-your-google-account-in-rstudio-server" class="section level1" number="1">
+<h1 number="1"><span class="header-section-number">1</span> Code to set up access to your Google account in <code>RStudio Server</code></h1>
+<p><strong>Please run this code in your console.</strong> This code reproduces the instructions in the <a href="https://rpubs.com/chchang47/ea30proj3s1">instruction slides for Week 1</a> of this project (no worries if you get around to doing this on week 2, starting 11/9).</p>
+<pre class="r"><code>library(googlesheets4)
+options(gargle_oob_default = TRUE) # this sets up an option for you to authenticate in your local browser rather than through the RStudio Server, which does not permit certain communication protocols; if you run this locally, you do not need to include this line
+enviro_soc_media_DF &lt;- googlesheets4::read_sheet(&quot;https://docs.google.com/spreadsheets/d/1hQy8kR81GHmMDPivpyd8XzAGU7A6oUCUArq1bltm5EQ/edit?usp=sharing&quot;)</code></pre>
+</div>
+<div id="reading-in-your-environmental-social-media-data" class="section level1" number="2">
+<h1 number="2"><span class="header-section-number">2</span> Reading in your environmental social media data</h1>
+<p>In the code chunk below, you will see how to use the function <code>read_sheet</code> from the package <code>googlesheets4</code> (called using <code>googlesheets4::read_sheet</code>) to query and download a Google sheet into the <code>R</code> workspace.</p>
+<p>I am reading in the <a href="https://docs.google.com/spreadsheets/d/1K-tgni6JJ33x1mG-rxNFopnC8sBuRzVLd5loBO0e1jk/edit?usp=sharing">sample environmental social media Google sheet</a> and storing it in a variable called <code>envDF</code>, short for <code>environmental data.frame</code>.</p>
+<pre class="r"><code>envDF &lt;- googlesheets4::read_sheet(&quot;https://docs.google.com/spreadsheets/d/1K-tgni6JJ33x1mG-rxNFopnC8sBuRzVLd5loBO0e1jk/edit?usp=sharing&quot;) # provide the sharing link to your own spreadsheet here to modify this code for your project.</code></pre>
+<p>In the <code>envDF</code> sample dataset, I created several columns that represent additional fields in Twitter data. I describe the columns in this example dataset below.</p>
+<pre class="r"><code>head(envDF)</code></pre>
+<pre><code>## # A tibble: 6 x 11
+##   Site  Issue PostLink Followers Text    RTs Likes ImageLink ImageDescription
+##   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;           
+## 1 Twit… Clim… https:/…      1032 &quot;Tha…     0     0 NA        NA              
+## 2 Twit… Clim… https:/…       966 &quot;Pet…     0     0 NA        NA              
+## 3 Twit… Clim… https:/…     39400 &quot;All…    49   225 NA        NA              
+## 4 Twit… Clim… https:/…     43100 &quot;Oka…    86   247 NA        NA              
+## 5 Twit… Clim… https:/…      2851 &quot;You…     0     1 NA        NA              
+## 6 Twit… Clim… https:/…      2609 &quot;For…     0     1 NA        NA              
+## # … with 2 more variables: Notes &lt;chr&gt;, SecondaryThemes &lt;chr&gt;</code></pre>
+<p><strong>Mandatory columns</strong></p>
+<ul>
+<li>Site: Which social media site (platform) was the source of each post (datum)?
+<ul>
+<li>Here, all of the data came from Twitter.</li>
+</ul></li>
+<li>Issue: What is the environmental issue discussed in the post?</li>
+<li>PostLink: The link to each post (<strong>very important to include</strong> for reproducibility/data integrity)</li>
+<li>Text: The author’s (text) message written in their post.</li>
+</ul>
+<p><strong>Optional columns</strong>:</p>
+<ul>
+<li>Followers: The number of followers that each post author had when I found and copied their post data into the Google sheet.
+<ul>
+<li>In my mind, this could be a predictor (independent) variable.</li>
+</ul></li>
+<li>RTs, Likes: These are columns presenting the number of retweets (<code>RTs</code>) and favorites (<code>Likes</code>) for each post.
+<ul>
+<li>These could be dependent (response) variables, representing public attention to the posts.</li>
+</ul></li>
+<li>ImageLink: Link to any image or videos embedded in the post (NB: Some platforms make this impossible/very difficult to access (e.g. Facebook/IG) by hiding these links behind an interactive <code>JavaScript</code> function.)
+<ul>
+<li>I won’t use this in the model, but I included for purposes of data integrity for future projects.</li>
+</ul></li>
+<li>ImageDescription: My own description of the image
+<ul>
+<li>Also unused in this project, but perhaps you may be interested in correlating the sentiment of image text descriptions with the text written in the post.</li>
+</ul></li>
+<li>Notes: My notes about the post, such as if it was a quote tweet
+<ul>
+<li>Not used in model</li>
+</ul></li>
+<li>SecondaryThemes: Any other environmental topics that were also present in the post
+<ul>
+<li>Not used in model - but this could be something that would be helpful for you in iteratively honing in on search terms to source your environmental social media dataset.</li>
+</ul></li>
+</ul>
+<p>Note that in this example, I am comparing two issues on the same site–Climate action and Public lands discourse (variable: Issue) on Twitter. In this project, you will have one (or more, but more is not necessary) categorical variable. That variable can either be <code>Issue</code>, in the case where you compare 2+ issues discussed on the same site, or <code>Site</code>, in the case where you compare the same issue discussed across 2+ sites (platforms).</p>
+<div id="cleaning-your-text-data" class="section level2" number="2.1">
+<h2 number="2.1"><span class="header-section-number">2.1</span> Cleaning your text data</h2>
+<p>The code below demonstrates how to use a variety of functions to clean your text data by removing the <code>#</code> or <code>@</code> symbol, URL links, etc. I use the <code>mutate</code> function to create new variables by applying transformations to existing columns in <code>envDF</code>, namely the column <code>Text</code> (<code>envDF$Text</code>), which stores each post (text/tweet).</p>
+<p>I create a cleaned version of the <code>Text</code> column by using the <code>str_replace_all</code> (string replace all, like find and replace) function to replace any instances of unwanted strings and replace them with blank space or “and” (in the case of <code>&amp;</code>). I also use <code>gsub</code> to perform an additional find &amp; replace operation for dangling, awkward quotation marks (my guess is that these weird <code>"\"</code> marks arise from folks writing messages in English on non-US/non-UK keyboards, such as a French keyboard, so that the underlying character is depicted differently).</p>
+<pre class="r"><code>envDF_tidy &lt;- envDF %&gt;% # using the pipe operator to pass the previous command/object forward to the next command; the outputs of this data cleaning will be stored in a data.frame entitled envDF_tidy (environmental data.frame that is tidy)
+  mutate(Text=str_replace_all(Text,&quot;http.*\\s*|&amp;amp;|&amp;lt;|&amp;gt;|RT|@|#|\\n|\\*&quot;, &quot;&quot;)) %&gt;% # creating a cleaned data column with the str_replace_all find and replace operator
+  mutate(Text=str_replace_all(Text,&quot;&amp;&quot;,&quot;and&quot;)) %&gt;% # replacing ampersands (&amp;) with and
+  mutate(Text=gsub(&quot;\&quot;&quot;, &quot;&quot;,Text)) %&gt;% # getting weird of awkward &quot;\&quot; quotation mark
+  mutate(Text=trimws(Text)) # removing any excess spaces trailing or leading the string</code></pre>
+<p>Now that we have completed this cleaning operation, we can compare the first five posts of the uncleaned vs. cleaned <code>Text</code> columns.</p>
+<p>First 5 entries in the uncleaned <code>Text</code> column:</p>
+<p>First 5 entries in the cleaned <code>Text</code> column:</p>
+</div>
+</div>
+<div id="creating-variables-based-on-your-text-data-for-analyses" class="section level1" number="3">
+<h1 number="3"><span class="header-section-number">3</span> Creating variables based on your text data for analyses</h1>
+<p>At present, we have a cleaned <code>Text</code> column and any other variables that you have chosen to input alongside the required columns (e.g. link to the post is one required field; the site, or which social media platform sourced the data, is another). Now we are going to move forward on converting the social media text data into a form that is amenable to statistical analysis.</p>
+<p>Remember that the goal of this project is for you to think creatively about how environmental advocates, such as citizen science recruiting teams or political mobilization teams for land conservation or climate action/decarbonization ballot measures, could improve their digital messaging strategies by “crowd-sourcing” insight from public social media discourse.</p>
+<p>As such, you will decide on some response variable. This could be something like measures of public engagement (e.g. retweets/shares/likes) or a measure you develop yourself (e.g. on a scale of 1-5, how appealing/motivating do I/do my friends find this message).</p>
+<p>The code below shows how to use the function <code>vader_df</code> from the <a href="https://github.com/cjhutto/vaderSentiment"><code>vader</code></a> package to calculate the sentiment of each post. I store the output of this function in the variable <code>sentiment_scores_DF</code>.</p>
+<pre class="r"><code>## Creating a data.frame to store sentiment scores from the vader package
+sentiment_scores_DF &lt;- vader_df(envDF_tidy$Text, rm_qm=TRUE) # vader_df is a function that calculates sentiment scores for a column of data in a data.frame
+head(sentiment_scores_DF[,3:6])</code></pre>
+<pre><code>##   compound   pos   neu   neg
+## 1    0.365 0.160 0.719 0.121
+## 2   -0.382 0.000 0.822 0.178
+## 3    0.382 0.146 0.854 0.000
+## 4   -0.700 0.051 0.718 0.231
+## 5   -0.866 0.081 0.653 0.267
+## 6    0.296 0.048 0.952 0.000</code></pre>
+<p>In this project, you are required to analyze your environmental social media text data. The code above generates a <code>data.frame</code> containing sentiment scores, namely the proportion of each message that has positive (<code>pos</code>), negative (<code>neg</code>), and neutral (<code>neu</code>) terms, as well as a <code>compound</code> sentiment score that ranges from [-1, 1]. For the compound score, lower values (<code>compount</code> <span class="math inline">\(\rightarrow -1\)</span>) indicate negative sentiment.</p>
+<div id="alternative-variables-for-text-analysis" class="section level2" number="3.1">
+<h2 number="3.1"><span class="header-section-number">3.1</span> Alternative variables for text analysis</h2>
+<p>For your datasets, you may be interested in the following ways to numerically represent your <code>Text</code> column:</p>
+<ul>
+<li>length of post or number of unique words</li>
+</ul>
+<pre><code>post_words &lt;- tokenize_tweets(envDF$Text,strip_url=TRUE) # this creates a list where each entry has the message broken into individual words, using spaces as the breaks between individual words; don&#39;t worry about it being called &quot;tokenize_tweets&quot; -- this function is fine to use on other social media (text) posts
+    # you can see any individual entry by using the [[]] index operator for lists; e.g. post_words[[4]]
+post_length &lt;- unlist( lapply(post_words, length) ) # this gives you the length of each post in terms of the number of words it contains
+post_unique_words &lt;- unlist( lapply(post_words, function(x) {length(unique(x))})) # number of unique words per post.
+  # NB: length(post_unique_words) is always &lt;= (less than/equal to) length(post_length)</code></pre>
+<ul>
+<li>number of hashtags, user mentions, or proportion of words that are hashtags/user mentions</li>
+</ul>
+<pre><code>num_hashtags &lt;- unlist( lapply(post_words, function(x) {length(grep(&quot;#&quot;,x))})) # number of hashtags in each post
+num_user_mentions &lt;- unlist( lapply(post_words, function(x) {length( grep(&quot;@&quot;,x))} )) # number of user mentions
+norm_hashtags &lt;- num_hashtags/post_length # depending on how you want to calculate the proportion of hashtags, you would use either post_length or post_unique_words as the denominator
+  # You could proceed with the same syntax as above to calculate the proportion of each message&#39;s words that mention/tag other users.
+  # Note that this assumes that your site (platform) uses &quot;#&quot; to denote hashtags and &quot;@&quot; to tag users.</code></pre>
+</div>
+</div>
+<div id="identifying-hypotheses-and-running-a-linear-regression" class="section level1" number="4">
+<h1 number="4"><span class="header-section-number">4</span> Identifying hypotheses and running a linear regression</h1>
+<p>With this example dataset, I will show you how to fit a linear regression using Ordinary Least Squares (OLS). Using this sample, I am fitting the model:</p>
+<p><span class="math inline">\(Y (\text{Public attention (Likes/Retweets)}) \sim \beta_0 + \beta_1 (\text{Issue}) + \beta_2 \text{Post Sentiment} + \beta_3 \text{Number of followers}\)</span></p>
+<p>This is an extension of the linear models that you ran in Project 1 for your climate blogs. In this linear model, I am testing several hypotheses. Note that <span class="math inline">\(H_0\)</span> denotes null and <span class="math inline">\(H_a\)</span> alternative hypothesis.</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(H_{0,0}: \beta_0 = 0; H_{a,0}: \beta_0 \neq 0\)</span>
+<ul>
+<li>This means that the null is that the intercept (value of <span class="math inline">\(Y\)</span> when all <span class="math inline">\(X_i\)</span>s are 0) is 0</li>
+<li>This one is pretty trivial; we don’t necessarily care too much about this intercept.</li>
+</ul></li>
+<li><span class="math inline">\(H_{0,1}: \beta_1 = 0; H_{a,1}: \beta_1 \neq 0\)</span>
+<ul>
+<li>This null hypothesis holds that there is no relationship between the categorical variable of issue and the number of Likes or Retweets (my <span class="math inline">\(Y\)</span> variables).</li>
+<li>What does this practically mean? Because <code>Issue</code> is a categorical variable (not numeric), this basically means that the null is that the mean number of Likes/Retweets is consistent for public lands and climate action tweets.</li>
+</ul></li>
+<li><span class="math inline">\(H_{0,2}: \beta_2 = 0; H_{a,2}: \beta_2 \neq 0\)</span>
+<ul>
+<li>Null: There is no relationship between sentiment and number of Likes/Retweets.</li>
+</ul></li>
+<li><span class="math inline">\(H_{0,3}: \beta_3 = 0; H_{a,3}: \beta_3 \neq 0\)</span>
+<ul>
+<li>Null: There is no relationship between an author’s number of followers and a post’s number of Likes/Retweets</li>
+</ul></li>
+</ol>
+<div id="creating-a-data.frame-to-store-your-model-variables-and-addressing-any-issues-of-skewed-variables" class="section level2" number="4.1">
+<h2 number="4.1"><span class="header-section-number">4.1</span> Creating a <code>data.frame</code> to store your model variables and addressing any issues of skewed variables</h2>
+<p>Below, I show how to fit this linear model using <code>lm</code>. I start by constructing a modeling <code>data.frame</code>. (This step isn’t necessary, but it can be nice to have a dedicated <code>data.frame</code> containing only the relevant variables for your linear models.)</p>
+<pre class="r"><code>## Creating model data.frame
+modelDF &lt;- data.frame(&quot;Sentiment&quot;=sentiment_scores_DF$compound,
+                      &quot;Issue&quot;=factor(envDF_tidy$Issue),
+                      &quot;Followers&quot;=envDF_tidy$Followers,
+                      &quot;RTs&quot;=envDF_tidy$RTs,
+                      &quot;Likes&quot;=envDF_tidy$Likes)
+  # In this section of code, I created names for columns using the convention &quot;ColumnName&quot; = variable
+  # NB: I **strongly** recommend making column names single words, or using CamelCase or Variable_Name_with_Underscores. Using punctuation or any other &quot;whitespace&quot; characters can cause issues down the line.</code></pre>
+<p>It is always good practice to inspect your dataset and ensure that there isn’t anything weird or alarming. I show two ways to visualize your modeling dataset below.</p>
+<pre class="r"><code>hist.data.frame(modelDF, nclass=5) # the nclass option tells this function how many bins to have for the numeric variables.</code></pre>
+<p><img src="Project3_files/figure-html/modelDF_hist-1.png" width="672" /></p>
+<p><strong>Oofda</strong>! There is definitely skew in the number of followers, retweets (<code>RTs</code>), and likes. We see that the majority of the data points have 0 or very few of each entity, and a right-skewed tail of a few posts with a ton of retweets/likes, or a few authors with a ton of followers. Such skew is very typical of Internet data and language data in general. We’ll have to even out the variation in these data to ensure a better fit for our linear models.</p>
+<p>In the plots above, most of the plots are histograms, which show the frequency of observations in different “bins”, or categories, of the data (e.g. posts with sentiment between -0.5 and 0 is one bin in the first histogram for Sentiment). However, the visualization for issue shows the number of observations for Climate action versus Public lands – this makes sense as these data are character (words), rather than numbers. The terms below each histogram show the total number of observations (<code>n:31</code> observations) and missing values (<code>m:0</code> - no missing values).</p>
+<p>Another way to visualize your data is to see the distribution of numeric values and group the numeric values by categorical variable(s). In this case, we will group the numeric variables by Issue.</p>
+<pre class="r"><code>xyplot(Likes ~ Sentiment + Followers, data = modelDF, group = Issue, # format: y ~ x1 + x2 + ... xn. Do NOT include the grouping variable in y ~ x1 + ... + xn; note that group = Issue and Issue does not appear in Likes ~ x1 (Sentiment) + x2 (Followers)
+       auto.key = list(title = &quot;Issue&quot;, columns = 2), scales=&quot;free&quot;
+       )</code></pre>
+<p><img src="Project3_files/figure-html/modelDF_lattice-1.png" width="672" /></p>
+<pre class="r"><code># How would you use this command to display retweets on the y-axis in these plots?</code></pre>
+<p>These plots again bear out that we’re going to have to do something about smoothing out the variation in Likes and Followers. Interestingly enough, it looks like there is a different relationship for Likes as a function of Sentiment for the Climate action versus Public lands posts. How might I specify that in the <code>lm</code> call later?</p>
+<p>Now, we’ll turn our attention to creating variables in <code>modelDF</code> that deal with the right skew in our predictor variable, Followers, and the response variables, retweets and likes. Typically, a log transformation is a good way to deal with highly skewed data.</p>
+<pre class="r"><code>modelDF$logFollowers &lt;- log(modelDF$Followers + 1) # note that log(0) --&gt; -infinity. So we ensure that no observations are = 0 by including an offset of +1, which is a pretty trivial increment when you consider that some authors had more than 150,000 followers.
+modelDF$logLikes &lt;- log(modelDF$Likes + 1)
+modelDF$logRTs &lt;- log(modelDF$RTs + 1)</code></pre>
+<p>We’ll inspect these new variables to see if we have actually succeeded in smoothing out the variation.</p>
+<pre class="r"><code>hist.data.frame(modelDF[,c(&quot;Sentiment&quot;,&quot;logFollowers&quot;,&quot;logRTs&quot;,&quot;logLikes&quot;)],nclass=5)</code></pre>
+<p><img src="Project3_files/figure-html/modelDF_logviz-1.png" width="672" /></p>
+<pre class="r"><code>xyplot(logLikes ~ Sentiment + logFollowers, data = modelDF, group = Issue, # format: y ~ x1 + x2 + ... xn. Do NOT include the grouping variable in y ~ x1 + ... + xn; note that group = Issue and Issue does not appear in Likes ~ x1 (Sentiment) + x2 (Followers)
+       auto.key = list(title = &quot;Issue&quot;, columns = 2), scales=&quot;free&quot;
+       )</code></pre>
+<p><img src="Project3_files/figure-html/modelDF_logviz-2.png" width="672" /></p>
+<pre class="r"><code>  # As before, I leave it to you to modify the xyplot command to display logRTs on the y-axis if you would like to see that visualization.</code></pre>
+<p>Great! We see much more even distribution across the range of values for the log-transformed variables.</p>
+</div>
+<div id="fitting-an-ols-linear-regression" class="section level2" number="4.2">
+<h2 number="4.2"><span class="header-section-number">4.2</span> Fitting an OLS linear regression</h2>
+<p>The next code chunk shows how to specify the linear model described above in Section 3, which tests the various null hypotheses for the variables.</p>
+<pre class="r"><code>textLM &lt;- lm(logLikes~Issue+Sentiment+logFollowers, data=modelDF)
+clean_summary_DF &lt;- summary(textLM)$coefficients # creating a data.frame to store the coefficient estimates from the summary() function 
+row.names(clean_summary_DF) &lt;- c(&quot;Intercept&quot;,&quot;Issue=Public lands&quot;,&quot;Sentiment&quot;,&quot;Followers (log scale)&quot;) # creating nicer row names, where each row name denotes one of the variables in the model
+kable(clean_summary_DF,digits=2) # using the kable function because this ensures that your output tables can play nicely with Word outputs.</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Estimate</th>
+<th align="right">Std. Error</th>
+<th align="right">t value</th>
+<th align="right">Pr(&gt;|t|)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Intercept</td>
+<td align="right">-1.13</td>
+<td align="right">1.36</td>
+<td align="right">-0.83</td>
+<td align="right">0.41</td>
+</tr>
+<tr class="even">
+<td align="left">Issue=Public lands</td>
+<td align="right">0.86</td>
+<td align="right">0.69</td>
+<td align="right">1.25</td>
+<td align="right">0.22</td>
+</tr>
+<tr class="odd">
+<td align="left">Sentiment</td>
+<td align="right">-0.03</td>
+<td align="right">0.61</td>
+<td align="right">-0.05</td>
+<td align="right">0.96</td>
+</tr>
+<tr class="even">
+<td align="left">Followers (log scale)</td>
+<td align="right">0.42</td>
+<td align="right">0.16</td>
+<td align="right">2.66</td>
+<td align="right">0.01</td>
+</tr>
+</tbody>
+</table>
+<p>From this linear model summary, we see that:</p>
+<ul>
+<li>we cannot reject <span class="math inline">\(H_{0,1}\)</span> – from our data, it is unclear if public lands tweets receive more likes than climate action tweets. However, as the <code>IssuePublic lands estimate</code> is 0.86, there is an indication that on average, conditional on a post discussing public lands instead of climate action, there could be a tendency for such posts to attract more likes.</li>
+<li>we cannot reject <span class="math inline">\(H_{0,2}\)</span> – in our data, post sentiment does not have a significant relationship with likes. However, as the estimate is <span class="math inline">\(&lt;0\)</span>, there is a suggestion that positive sentiment–or more upbeat posts–could garner fewer likes.</li>
+<li>we can reject <span class="math inline">\(H_{0,3}\)</span>. Our data indicate that more followers tends to significantly increase the number of likes for posts.</li>
+</ul>
+<p>For Project 3, you’re welcome to stop here with your analyses. However, if you’d like to remove outliers, display linear model predictions graphically, and consider interaction effects<span class="math inline">\(^1\)</span>, please continue reading below.</p>
+<p><span class="math inline">\(^1:\)</span> If interaction effects in linear regression models are unfamiliar, here are several helpful resources:</p>
+<ol style="list-style-type: decimal">
+<li><a href="https://statisticsbyjim.com/regression/interaction-effects/">A silly but clear example of the interaction between type of food (hot dog or ice cream) and condiment (mustard or chocolate sauce) and its impact on the response variable of gustatory enjoyment</a></li>
+<li><a href="http://www.sthda.com/english/articles/40-regression-analysis/164-interaction-effect-in-multiple-regression-essentials/">A straightforward example with <code>R</code> code focused on ad sales across Facebook and YouTube, with an example interaction effect</a></li>
+<li><a href="https://www.econometrics-with-r.org/8-3-interactions-between-independent-variables.html">A third, slightly more technical example focused on earnings with an interaction effect between gender and holding a college degree</a></li>
+</ol>
+</div>
+</div>
+<div id="more-advanced-steps" class="section level1" number="5">
+<h1 number="5"><span class="header-section-number">5</span> More advanced steps</h1>
+<p>Below, I’ll initially set up a model with an interaction effect between Issue and Sentiment. This is informed by my observation of the two <code>xyplot</code>s above. I wondered if there were differing relationships between sentiment and attention (Likes/Retweets) for public lands versus climate action posts.</p>
+<div id="including-interaction-effects" class="section level2" number="5.1">
+<h2 number="5.1"><span class="header-section-number">5.1</span> Including interaction effects</h2>
+<p>We now add on an additional covariate and thus null hypothesis, which is:</p>
+<p><span class="math inline">\(Y (\text{Public attention (Likes/Retweets)}) \sim \beta_0 + \beta_1 (\text{Issue}) + \beta_2 \text{Sentiment} + \beta_3 \text{Number of followers} + \beta_4 \text{Sentiment * Issue}\)</span></p>
+<p><span class="math inline">\(H_{0,4}: \beta_4 =0; H_{a,4}: \beta_4 \neq 0\)</span>; if we reject the null, then we conclude that there is a significant interaction effect between sentiment and issue on the dependent variable.</p>
+<pre class="r"><code>textLM &lt;- lm(logLikes~Issue+Sentiment+logFollowers+Sentiment*Issue, data=modelDF) # I specify the interaction using the syntax Sentiment*Issue (X1*X2)
+clean_summary_DF &lt;- summary(textLM)$coefficients
+row.names(clean_summary_DF) &lt;- c(&quot;Intercept&quot;,&quot;Issue=Public lands&quot;,&quot;Sentiment&quot;,&quot;Followers (log scale)&quot;,&quot;Sentiment: Public lands&quot;)
+kable(clean_summary_DF,digits=2)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Estimate</th>
+<th align="right">Std. Error</th>
+<th align="right">t value</th>
+<th align="right">Pr(&gt;|t|)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Intercept</td>
+<td align="right">-1.13</td>
+<td align="right">1.41</td>
+<td align="right">-0.80</td>
+<td align="right">0.43</td>
+</tr>
+<tr class="even">
+<td align="left">Issue=Public lands</td>
+<td align="right">0.87</td>
+<td align="right">0.72</td>
+<td align="right">1.21</td>
+<td align="right">0.24</td>
+</tr>
+<tr class="odd">
+<td align="left">Sentiment</td>
+<td align="right">-0.01</td>
+<td align="right">0.80</td>
+<td align="right">-0.01</td>
+<td align="right">0.99</td>
+</tr>
+<tr class="even">
+<td align="left">Followers (log scale)</td>
+<td align="right">0.42</td>
+<td align="right">0.16</td>
+<td align="right">2.59</td>
+<td align="right">0.02</td>
+</tr>
+<tr class="odd">
+<td align="left">Sentiment: Public lands</td>
+<td align="right">-0.05</td>
+<td align="right">1.27</td>
+<td align="right">-0.04</td>
+<td align="right">0.97</td>
+</tr>
+</tbody>
+</table>
+<p>While we cannot reject the null hypothesis for the interaction effect between sentiment and issue, we do observe that it seems that sentiment has an indeterminate effect on the number of likes for posts in general. However, as the <span class="math inline">\(\beta_4\)</span> estimate has a more negative magnitude than <span class="math inline">\(\beta_2\)</span>, suggesting that for public lands posts, sentiment may be negatively related to the number of likes.</p>
+</div>
+<div id="removing-outliers" class="section level2" number="5.2">
+<h2 number="5.2"><span class="header-section-number">5.2</span> Removing outliers</h2>
+<p>The code below shows how to remove outliers (<a href="https://bookdown.org/ripberjt/qrmbook/ols-assumptions-and-simple-regression-diagnostics.html">background on outliers in the context of R linear regressions</a>) from your dataset based on the model itself. Remember that the <code>plot(textLM)</code> command would be one way to (informally) assess major deviations from the assumptions of linear regression.</p>
+<p>I show how to use Cook’s Distance (<a href="https://online.stat.psu.edu/stat462/node/173/">brief lecture from Pennsylvania State University on Cook’s Distance</a>) in the chunk below to detect and then remove outliers.</p>
+<pre class="r"><code>cooksD &lt;- cooks.distance(textLM) # calculate Cook&#39;s Distance metric for each point in the textLM linear regression model
+cooksD_threshold &lt;- 4/nrow(modelDF) # threshold for highly influential (outlier) data points
+influential_obs &lt;- which(cooksD &gt; cooksD_threshold) # this returns the indices for outlier data points
+modelDF_no_outliers &lt;- modelDF[-influential_obs, ] # we use the -vector convention to remove the entries (rows) that are outliers; this is an example of a subsetting operation</code></pre>
+<p>Next, we can re-run the model and see how the coefficients do or do not change.</p>
+<pre class="r"><code>textLM_no_outliers &lt;- update(textLM, data=modelDF_no_outliers) # I use the update command to re-run the linear model with the interaction effect (the last--immediately preceding--version of the textLM object) with the data.frame that has the outliers removed.
+clean_summary_DF &lt;- summary(textLM_no_outliers)$coefficients
+row.names(clean_summary_DF) &lt;- c(&quot;Intercept&quot;,&quot;Issue=Public lands&quot;,&quot;Sentiment&quot;,&quot;Followers (log scale)&quot;,&quot;Sentiment: Public lands&quot;)
+kable(clean_summary_DF,digits=2)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Estimate</th>
+<th align="right">Std. Error</th>
+<th align="right">t value</th>
+<th align="right">Pr(&gt;|t|)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Intercept</td>
+<td align="right">-0.28</td>
+<td align="right">1.27</td>
+<td align="right">-0.22</td>
+<td align="right">0.83</td>
+</tr>
+<tr class="even">
+<td align="left">Issue=Public lands</td>
+<td align="right">1.70</td>
+<td align="right">0.83</td>
+<td align="right">2.04</td>
+<td align="right">0.05</td>
+</tr>
+<tr class="odd">
+<td align="left">Sentiment</td>
+<td align="right">0.14</td>
+<td align="right">0.77</td>
+<td align="right">0.18</td>
+<td align="right">0.86</td>
+</tr>
+<tr class="even">
+<td align="left">Followers (log scale)</td>
+<td align="right">0.27</td>
+<td align="right">0.15</td>
+<td align="right">1.78</td>
+<td align="right">0.09</td>
+</tr>
+<tr class="odd">
+<td align="left">Sentiment: Public lands</td>
+<td align="right">-0.85</td>
+<td align="right">1.45</td>
+<td align="right">-0.59</td>
+<td align="right">0.56</td>
+</tr>
+</tbody>
+</table>
+<p>Note that when the outliers are removed, we see a very different pattern in the data. While none of the <span class="math inline">\(\beta\)</span> coefficient estimates are significant, we see interesting patterns in the estimate column nonetheless. The impact of followers on the number of likes trends toward significance (<span class="math inline">\(p = 0.09\)</span>; typically the threshold for “trending toward significance” is 0.1) and gestures to a postive relationship where having more followers tends to enhance the number of likes a post receives (which makes sense, given how the social media algorithms farm out posts to people’s timelines).</p>
+<p>On the other hand, we see a reversal for the coefficient estimate for sentiment. In general, more positive sentiment may be associated with more likes, though this relationship is not significantly different from 0. However, the sentiment:public lands interaction indicates that for public lands posts, more negative posts tend to receive more likes.</p>
+<p>In your bullet point outlines and final reports (<a href="https://ea30-fa20.github.io/ConsSocMedia/assignments.html">Assignments 2 and 3</a>), I expect that you will include sections on your interpretation on your findings and recommendations for improving environmental social media communications and/or future work priorities for environmental social media communications research.</p>
+</div>
+<div id="displaying-model-predictions-graphically" class="section level2" number="5.3">
+<h2 number="5.3"><span class="header-section-number">5.3</span> Displaying model predictions graphically</h2>
+<p>Finally, in this code section, I show how you can display the predictions of your linear model across the range of values you have observed for your predictor variables. This can provide added insight, even if the coefficient estimates are not significantly different from 0 (<span class="math inline">\(H_{0,i}\)</span> cannot be rejected for <span class="math inline">\(\beta_i\)</span>). We can at least discern if there are tendencies or trends emerging in the data and model. Note that a small sample size typically means that an effect must be that much larger to reach statistical significance–this is due to smaller datasets typically having a larger ratio of noise:signal (reflected in larger values of standard errors for each coefficient estimate).</p>
+<p>The plot below shows how to use <code>plot</code> and <code>points</code> to display the predictions of <code>textLM_no_outliers</code> for the variable Sentiment and break up your observations between two issues (or two platforms). You could adapt/extend this code to cover cases where you have multiple issues (3+) or sites (3+).</p>
+<pre class="r"><code>## 1: Generate model predictions
+pred_ys &lt;- exp(predict(textLM_no_outliers))-1
+  # We exponentiate the predictions because we log-transformed the number of Likes originally
+  # This ensures that the predictions are on the same scale as the observed number of Likes in this dataset (rather than on a log-transformed scale)
+
+## 2: Plot the predictions for sentiment
+  # 2.1: We first find the indices for the observations that correspond to climate action
+climate_action_indices &lt;- which(modelDF_no_outliers$Issue==&quot;Climate action&quot;)
+  # 2.2: Next we instantiate a plot for just the climate action posts and model predictions
+plot(modelDF_no_outliers$Sentiment[climate_action_indices],pred_ys[climate_action_indices],
+     bty=&quot;L&quot;, # change the box type of the plot
+     pch=19, # use closed circles as point symbols
+     col=scales::alpha(&quot;blue&quot;,0.8), # use some transparency for the points to be able to see overplotted points
+     xlab=&quot;Sentiment&quot;,
+     ylab=&quot;Number of likes&quot;)
+points(modelDF_no_outliers$Sentiment[-climate_action_indices],pred_ys[-climate_action_indices],pch=19,col=scales::alpha(&quot;forestgreen&quot;,0.6)) # this command adds points for the public lands posts; this works because this dataset has only either Climate action or Public lands posts. 
+legend(&quot;topleft&quot;, # legend location argument - top left of plot
+       legend=c(&quot;Climate&quot;,&quot;Public lands&quot;), # labels to display describing your (categories) of data
+       col=c(&quot;blue&quot;,&quot;forestgreen&quot;), # colors differentiating your categories (how would you do this for different line symbols or point symbols if you kept the colors the same otherwise?)
+       pch=c(19,19), # display closed-circle points for both categories
+       bty=&quot;n&quot;) # do not include a box around the legend</code></pre>
+<p><img src="Project3_files/figure-html/plot_final_ols-1.png" width="672" /></p>
+<pre class="r"><code>  # How would you modify this code if you had 3+ issues or were comparing the same issue across sites?
+  # Note that you can move the legend around in your plots by specifying different position arguments (e.g. &quot;topright&quot;,&quot;bottomleft&quot;, etc.) or even giving values for x and y positions within the plotting range.</code></pre>
+<p>Oh shoot! We can’t see the predictions for public lands posts, which should be shown in . What could be the source of this issue?</p>
+<p>If we look back at the <code>xyplots</code> outputs from before, we can see that the public lands posts tended to have a different range of values for sentiment (<code>X</code>) and likes (<code>Y</code>). You can always see what the range of values are for some particular variable by using the subsetting operation and the <code>range</code> or <code>summary</code> functions, e.g.:</p>
+<ul>
+<li><code>range(modelDF_no_outliers$Sentiment[-climate_action_indices])</code>: This tells us how we would need to modify the x-axis limits (<code>xlim</code>)</li>
+<li><code>range(pred_ys[-climate_action_indices])</code>: Ditto for y-axis</li>
+</ul>
+<pre class="r"><code>plot(modelDF_no_outliers$Sentiment[climate_action_indices],pred_ys[climate_action_indices],
+     bty=&quot;L&quot;, # change the box type of the plot
+     pch=19, # use closed circles as point symbols
+     col=scales::alpha(&quot;blue&quot;,0.8), # use some transparency for the points to be able to see overplotted points
+     xlab=&quot;Sentiment&quot;,
+     ylab=&quot;Number of likes&quot;,
+     xlim=c(-1,1),ylim=c(1,100)) # ok! We need to expand the range of the x and y-axes
+points(modelDF_no_outliers$Sentiment[-climate_action_indices],pred_ys[-climate_action_indices],pch=19,col=scales::alpha(&quot;forestgreen&quot;,0.6))
+legend(&quot;topleft&quot;,legend=c(&quot;Climate&quot;,&quot;Public lands&quot;),col=c(&quot;blue&quot;,&quot;forestgreen&quot;),pch=c(19,19),bty=&quot;n&quot;)</code></pre>
+<p><img src="Project3_files/figure-html/plot_extend_range-1.png" width="672" /></p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

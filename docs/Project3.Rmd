@@ -1,0 +1,344 @@
+---
+title: "Fully worked example for Project 3"
+author: "Charlotte Chang"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+### NB (Nota bene): This initial code chunk contains any and all packages and package options that will be used in this project
+knitr::opts_chunk$set(echo = TRUE)
+
+### Loading packages
+  # When I use external packages that aren't "base R", I load them into the workspace here with the library(package name) command.
+library(tidyverse) # load the Tidyverse set of packages that supplement base R functionalities like data.frame, reading in spreadsheet data (read_csv, etc.)
+library(googlesheets4) # package that provides a convenient interface in R to interact with Google spreadsheets
+library(knitr) # this is the package that knits Rmarkdown files to HTML, Word, or PDF; we'll be using the kable() function in this package to make nice tables for Word
+library(vader) # this is the package we will be using for sentiment analysis
+library(tidytext) # this is the package we will use for wrangling text data
+library(stringr) # package with helpful functions dealing with string, or character/text data.
+library(tokenizers) # package to split strings into smaller entities (e.g. messages into words, ngrams, or individual letters)
+library(lattice) # package that extends base R plot visualizations
+library(Hmisc) # package that has helpful visualization tools for our data
+
+  # Package options
+options(gargle_oauth_email="c.h.w.chang@gmail.com") # default to "out-of-band" authentication for googlesheets4. TL;DR for this is that port 1410 which googlesheets4 uses to perform the authentication with Google's API (Application Programming Interface) is closed to external traffic on RStudio Server.
+  # No problem though! The "out-of-band" authentication seamlessly just redirects any authentication requests to your local computer (and it will just pop up another tab in your internet browser)
+```
+
+# Code to set up access to your Google account in `RStudio Server`
+
+**Please run this code in your console.** This code reproduces the instructions in the [instruction slides for Week 1](https://rpubs.com/chchang47/ea30proj3s1) of this project (no worries if you get around to doing this on week 2, starting 11/9).
+
+```{r google_setup, eval=FALSE}
+library(googlesheets4)
+options(gargle_oob_default = TRUE) # this sets up an option for you to authenticate in your local browser rather than through the RStudio Server, which does not permit certain communication protocols; if you run this locally, you do not need to include this line
+enviro_soc_media_DF <- googlesheets4::read_sheet("https://docs.google.com/spreadsheets/d/1hQy8kR81GHmMDPivpyd8XzAGU7A6oUCUArq1bltm5EQ/edit?usp=sharing")
+```
+
+# Reading in your environmental social media data
+
+In the code chunk below, you will see how to use the function `read_sheet` from the package `googlesheets4` (called using `googlesheets4::read_sheet`) to query and download a Google sheet into the `R` workspace. 
+
+I am reading in the [sample environmental social media Google sheet](https://docs.google.com/spreadsheets/d/1K-tgni6JJ33x1mG-rxNFopnC8sBuRzVLd5loBO0e1jk/edit?usp=sharing) and storing it in a variable called `envDF`, short for `environmental data.frame`.
+
+```{r read_envDF, message=FALSE}
+envDF <- googlesheets4::read_sheet("https://docs.google.com/spreadsheets/d/1K-tgni6JJ33x1mG-rxNFopnC8sBuRzVLd5loBO0e1jk/edit?usp=sharing") # provide the sharing link to your own spreadsheet here to modify this code for your project.
+```
+
+In the `envDF` sample dataset, I created several columns that represent additional fields in Twitter data. I describe the columns in this example dataset below.
+
+```{r display_envDF}
+head(envDF)
+```
+
+**Mandatory columns**
+
+* Site: Which social media site (platform) was the source of each post (datum)?
+  + Here, all of the data came from Twitter.
+* Issue: What is the environmental issue discussed in the post?
+* PostLink: The link to each post (**very important to include** for reproducibility/data integrity)
+* Text: The author's (text) message written in their post.
+
+**Optional columns**:
+
+* Followers: The number of followers that each post author had when I found and copied their post data into the Google sheet.
+    + In my mind, this could be a predictor (independent) variable.
+* RTs, Likes: These are columns presenting the number of retweets (`RTs`) and favorites (`Likes`) for each post.
+    + These could be dependent (response) variables, representing public attention to the posts.
+* ImageLink: Link to any image or videos embedded in the post (NB: Some platforms make this impossible/very difficult to access (e.g. Facebook/IG) by hiding these links behind an interactive `JavaScript` function.)
+    + I won't use this in the model, but I included for purposes of data integrity for future projects.
+* ImageDescription: My own description of the image
+    + Also unused in this project, but perhaps you may be interested in correlating the sentiment of image text descriptions with the text written in the post.
+* Notes: My notes about the post, such as if it was a quote tweet
+    + Not used in model
+* SecondaryThemes: Any other environmental topics that were also present in the post
+    + Not used in model - but this could be something that would be helpful for you in iteratively honing in on search terms to source your environmental social media dataset.
+
+Note that in this example, I am comparing two issues on the same site--Climate action and Public lands discourse (variable: Issue) on Twitter. In this project, you will have one (or more, but more is not necessary) categorical variable. That variable can either be `Issue`, in the case where you compare 2+ issues discussed on the same site, or `Site`, in the case where you compare the same issue discussed across 2+ sites (platforms).
+
+## Cleaning your text data
+
+The code below demonstrates how to use a variety of functions to clean your text data by removing the `#` or `@` symbol, URL links, etc. I use the `mutate` function to create new variables by applying transformations to existing columns in `envDF`, namely the column `Text` (`envDF$Text`), which stores each post (text/tweet). 
+
+I create a cleaned version of the `Text` column by using the `str_replace_all` (string replace all, like find and replace) function to replace any instances of unwanted strings and replace them with blank space or "and" (in the case of `&`). I also use `gsub` to perform an additional find & replace operation for dangling, awkward quotation marks (my guess is that these weird `"\"` marks arise from folks writing messages in English on non-US/non-UK keyboards, such as a French keyboard, so that the underlying character is depicted differently).
+
+```{r text_cleaning}
+envDF_tidy <- envDF %>% # using the pipe operator to pass the previous command/object forward to the next command; the outputs of this data cleaning will be stored in a data.frame entitled envDF_tidy (environmental data.frame that is tidy)
+  mutate(Text=str_replace_all(Text,"http.*\\s*|&amp;|&lt;|&gt;|RT|@|#|\\n|\\*", "")) %>% # creating a cleaned data column with the str_replace_all find and replace operator
+  mutate(Text=str_replace_all(Text,"&","and")) %>% # replacing ampersands (&) with and
+  mutate(Text=gsub("\"", "",Text)) %>% # getting weird of awkward "\" quotation mark
+  mutate(Text=trimws(Text)) # removing any excess spaces trailing or leading the string
+```
+
+Now that we have completed this cleaning operation, we can compare the first five posts of the uncleaned vs. cleaned `Text` columns. 
+
+First 5 entries in the uncleaned `Text` column: `r print(envDF$Text[1:5])`
+
+First 5 entries in the cleaned `Text` column: `r print(envDF_tidy$Text[1:5])`
+
+# Creating variables based on your text data for analyses
+
+At present, we have a cleaned `Text` column and any other variables that you have chosen to input alongside the required columns (e.g. link to the post is one required field; the site, or which social media platform sourced the data, is another). Now we are going to move forward on converting the social media text data into a form that is amenable to statistical analysis. 
+
+Remember that the goal of this project is for you to think creatively about how environmental advocates, such as citizen science recruiting teams or political mobilization teams for land conservation or climate action/decarbonization ballot measures, could improve their digital messaging strategies by "crowd-sourcing" insight from public social media discourse.
+
+As such, you will decide on some response variable. This could be something like measures of public engagement (e.g. retweets/shares/likes) or a measure you develop yourself (e.g. on a scale of 1-5, how appealing/motivating do I/do my friends find this message).
+
+The code below shows how to use the function `vader_df` from the [`vader`](https://github.com/cjhutto/vaderSentiment) package to calculate the sentiment of each post. I store the output of this function in the variable `sentiment_scores_DF`.
+
+```{r calculating_sentiment}
+## Creating a data.frame to store sentiment scores from the vader package
+sentiment_scores_DF <- vader_df(envDF_tidy$Text, rm_qm=TRUE) # vader_df is a function that calculates sentiment scores for a column of data in a data.frame
+head(sentiment_scores_DF[,3:6])
+```
+
+In this project, you are required to analyze your environmental social media text data. The code above generates a `data.frame` containing sentiment scores, namely the proportion of each message that has positive (`pos`), negative (`neg`), and neutral (`neu`) terms, as well as a `compound` sentiment score that ranges from [-1, 1]. For the compound score, lower values (`compount` $\rightarrow -1$) indicate negative sentiment.
+
+## Alternative variables for text analysis
+
+For your datasets, you may be interested in the following ways to numerically represent your `Text` column:
+
+* length of post or number of unique words
+
+```
+post_words <- tokenize_tweets(envDF$Text,strip_url=TRUE) # this creates a list where each entry has the message broken into individual words, using spaces as the breaks between individual words; don't worry about it being called "tokenize_tweets" -- this function is fine to use on other social media (text) posts
+    # you can see any individual entry by using the [[]] index operator for lists; e.g. post_words[[4]]
+post_length <- unlist( lapply(post_words, length) ) # this gives you the length of each post in terms of the number of words it contains
+post_unique_words <- unlist( lapply(post_words, function(x) {length(unique(x))})) # number of unique words per post.
+  # NB: length(post_unique_words) is always <= (less than/equal to) length(post_length)
+```
+
+* number of hashtags, user mentions, or proportion of words that are hashtags/user mentions
+
+```
+num_hashtags <- unlist( lapply(post_words, function(x) {length(grep("#",x))})) # number of hashtags in each post
+num_user_mentions <- unlist( lapply(post_words, function(x) {length( grep("@",x))} )) # number of user mentions
+norm_hashtags <- num_hashtags/post_length # depending on how you want to calculate the proportion of hashtags, you would use either post_length or post_unique_words as the denominator
+  # You could proceed with the same syntax as above to calculate the proportion of each message's words that mention/tag other users.
+  # Note that this assumes that your site (platform) uses "#" to denote hashtags and "@" to tag users.
+```
+
+# Identifying hypotheses and running a linear regression
+
+With this example dataset, I will show you how to fit a linear regression using Ordinary Least Squares (OLS). Using this sample, I am fitting the model:
+
+$Y (\text{Public attention (Likes/Retweets)}) \sim \beta_0 + \beta_1 (\text{Issue}) + \beta_2 \text{Post Sentiment} + \beta_3 \text{Number of followers}$
+
+This is an extension of the linear models that you ran in Project 1 for your climate blogs. In this linear model, I am testing several hypotheses. Note that $H_0$ denotes null and $H_a$ alternative hypothesis.
+
+1. $H_{0,0}: \beta_0 = 0; H_{a,0}: \beta_0 \neq 0$
+    + This means that the null is that the intercept (value of $Y$ when all $X_i$s are 0) is 0
+    + This one is pretty trivial; we don't necessarily care too much about this intercept.
+2. $H_{0,1}: \beta_1 = 0; H_{a,1}: \beta_1 \neq 0$
+    + This null hypothesis holds that there is no relationship between the categorical variable of issue and the number of Likes or Retweets (my $Y$ variables).
+    + What does this practically mean? Because `Issue` is a categorical variable (not numeric), this basically means that the null is that the mean number of Likes/Retweets is consistent for public lands and climate action tweets.
+3. $H_{0,2}: \beta_2 = 0; H_{a,2}: \beta_2 \neq 0$
+    + Null: There is no relationship between sentiment and number of Likes/Retweets.
+4. $H_{0,3}: \beta_3 = 0; H_{a,3}: \beta_3 \neq 0$
+    + Null: There is no relationship between an author's number of followers and a post's number of Likes/Retweets
+
+## Creating a `data.frame` to store your model variables and addressing any issues of skewed variables
+
+Below, I show how to fit this linear model using `lm`. I start by constructing a modeling `data.frame`. (This step isn't necessary, but it can be nice to have a dedicated `data.frame` containing only the relevant variables for your linear models.)
+
+```{r modelDF}
+## Creating model data.frame
+modelDF <- data.frame("Sentiment"=sentiment_scores_DF$compound,
+                      "Issue"=factor(envDF_tidy$Issue),
+                      "Followers"=envDF_tidy$Followers,
+                      "RTs"=envDF_tidy$RTs,
+                      "Likes"=envDF_tidy$Likes)
+  # In this section of code, I created names for columns using the convention "ColumnName" = variable
+  # NB: I **strongly** recommend making column names single words, or using CamelCase or Variable_Name_with_Underscores. Using punctuation or any other "whitespace" characters can cause issues down the line.
+```
+
+It is always good practice to inspect your dataset and ensure that there isn't anything weird or alarming. I show two ways to visualize your modeling dataset below.
+
+```{r modelDF_hist}
+hist.data.frame(modelDF, nclass=5) # the nclass option tells this function how many bins to have for the numeric variables.
+```
+
+**Oofda**! There is definitely skew in the number of followers, retweets (`RTs`), and likes. We see that the majority of the data points have 0 or very few of each entity, and a right-skewed tail of a few posts with a ton of retweets/likes, or a few authors with a ton of followers. Such skew is very typical of Internet data and language data in general. We'll have to even out the variation in these data to ensure a better fit for our linear models.
+
+In the plots above, most of the plots are histograms, which show the frequency of observations in different "bins", or categories, of the data (e.g. posts with sentiment between -0.5 and 0 is one bin in the first histogram for Sentiment). However, the visualization for issue shows the number of observations for Climate action versus Public lands -- this makes sense as these data are character (words), rather than numbers. The terms below each histogram show the total number of observations (`n:31` observations) and missing values (`m:0` - no missing values).
+
+Another way to visualize your data is to see the distribution of numeric values and group the numeric values by categorical variable(s). In this case, we will group the numeric variables by Issue.
+
+```{r modelDF_lattice}
+xyplot(Likes ~ Sentiment + Followers, data = modelDF, group = Issue, # format: y ~ x1 + x2 + ... xn. Do NOT include the grouping variable in y ~ x1 + ... + xn; note that group = Issue and Issue does not appear in Likes ~ x1 (Sentiment) + x2 (Followers)
+       auto.key = list(title = "Issue", columns = 2), scales="free"
+       )
+
+# How would you use this command to display retweets on the y-axis in these plots?
+```
+
+These plots again bear out that we're going to have to do something about smoothing out the variation in Likes and Followers. Interestingly enough, it looks like there is a different relationship for Likes as a function of Sentiment for the Climate action versus Public lands posts. How might I specify that in the `lm` call later?
+
+Now, we'll turn our attention to creating variables in `modelDF` that deal with the right skew in our predictor variable, Followers, and the response variables, retweets and likes. Typically, a log transformation is a good way to deal with highly skewed data.
+
+```{r modelDF_logtransform}
+modelDF$logFollowers <- log(modelDF$Followers + 1) # note that log(0) --> -infinity. So we ensure that no observations are = 0 by including an offset of +1, which is a pretty trivial increment when you consider that some authors had more than 150,000 followers.
+modelDF$logLikes <- log(modelDF$Likes + 1)
+modelDF$logRTs <- log(modelDF$RTs + 1)
+```
+
+We'll inspect these new variables to see if we have actually succeeded in smoothing out the variation.
+
+```{r modelDF_logviz}
+hist.data.frame(modelDF[,c("Sentiment","logFollowers","logRTs","logLikes")],nclass=5)
+xyplot(logLikes ~ Sentiment + logFollowers, data = modelDF, group = Issue, # format: y ~ x1 + x2 + ... xn. Do NOT include the grouping variable in y ~ x1 + ... + xn; note that group = Issue and Issue does not appear in Likes ~ x1 (Sentiment) + x2 (Followers)
+       auto.key = list(title = "Issue", columns = 2), scales="free"
+       )
+  # As before, I leave it to you to modify the xyplot command to display logRTs on the y-axis if you would like to see that visualization.
+```
+
+Great! We see much more even distribution across the range of values for the log-transformed variables.
+
+## Fitting an OLS linear regression
+
+The next code chunk shows how to specify the linear model described above in Section 3, which tests the various null hypotheses for the variables.
+
+```{r ols_initial}
+textLM <- lm(logLikes~Issue+Sentiment+logFollowers, data=modelDF)
+clean_summary_DF <- summary(textLM)$coefficients # creating a data.frame to store the coefficient estimates from the summary() function 
+row.names(clean_summary_DF) <- c("Intercept","Issue=Public lands","Sentiment","Followers (log scale)") # creating nicer row names, where each row name denotes one of the variables in the model
+kable(clean_summary_DF,digits=2) # using the kable function because this ensures that your output tables can play nicely with Word outputs.
+```
+
+From this linear model summary, we see that:
+
+* we cannot reject $H_{0,1}$ -- from our data, it is unclear if public lands tweets receive more likes than climate action tweets. However, as the `IssuePublic lands estimate` is 0.86, there is an indication that on average, conditional on a post discussing public lands instead of climate action, there could be a tendency for such posts to attract more likes.
+* we cannot reject $H_{0,2}$ -- in our data, post sentiment does not have a significant relationship with likes. However, as the estimate is $<0$, there is a suggestion that positive sentiment--or more upbeat posts--could garner fewer likes.
+* we can reject $H_{0,3}$. Our data indicate that more followers tends to significantly increase the number of likes for posts.
+
+For Project 3, you're welcome to stop here with your analyses. However, if you'd like to remove outliers, display linear model predictions graphically, and consider interaction effects$^1$, please continue reading below.
+
+$^1:$ If interaction effects in linear regression models are unfamiliar, here are several helpful resources:
+
+1. [A silly but clear example of the interaction between type of food (hot dog or ice cream) and condiment (mustard or chocolate sauce) and its impact on the response variable of gustatory enjoyment](https://statisticsbyjim.com/regression/interaction-effects/)
+2. [A straightforward example with `R` code focused on ad sales across Facebook and YouTube, with an example interaction effect](http://www.sthda.com/english/articles/40-regression-analysis/164-interaction-effect-in-multiple-regression-essentials/)
+3. [A third, slightly more technical example focused on earnings with an interaction effect between gender and holding a college degree](https://www.econometrics-with-r.org/8-3-interactions-between-independent-variables.html)
+
+# More advanced steps
+
+Below, I'll initially set up a model with an interaction effect between Issue and Sentiment. This is informed by my observation of the two `xyplot`s above. I wondered if there were differing relationships between sentiment and attention (Likes/Retweets) for public lands versus climate action posts.
+
+## Including interaction effects
+
+We now add on an additional covariate and thus null hypothesis, which is:
+
+$Y (\text{Public attention (Likes/Retweets)}) \sim \beta_0 + \beta_1 (\text{Issue}) + \beta_2 \text{Sentiment} + \beta_3 \text{Number of followers} + \beta_4 \text{Sentiment * Issue}$
+
+$H_{0,4}: \beta_4 =0; H_{a,4}: \beta_4 \neq 0$; if we reject the null, then we conclude that there is a significant interaction effect between sentiment and issue on the dependent variable.
+
+```{r ols_interact}
+textLM <- lm(logLikes~Issue+Sentiment+logFollowers+Sentiment*Issue, data=modelDF) # I specify the interaction using the syntax Sentiment*Issue (X1*X2)
+clean_summary_DF <- summary(textLM)$coefficients
+row.names(clean_summary_DF) <- c("Intercept","Issue=Public lands","Sentiment","Followers (log scale)","Sentiment: Public lands")
+kable(clean_summary_DF,digits=2)
+```
+
+While we cannot reject the null hypothesis for the interaction effect between sentiment and issue, we do observe that it seems that sentiment has an indeterminate effect on the number of likes for posts in general. However, as the $\beta_4$ estimate has a more negative magnitude than $\beta_2$, suggesting that for public lands posts, sentiment may be negatively related to the number of likes.
+
+## Removing outliers
+
+The code below shows how to remove outliers ([background on outliers in the context of R linear regressions](https://bookdown.org/ripberjt/qrmbook/ols-assumptions-and-simple-regression-diagnostics.html)) from your dataset based on the model itself. Remember that the `plot(textLM)` command would be one way to (informally) assess major deviations from the assumptions of linear regression.
+
+I show how to use Cook's Distance ([brief lecture from Pennsylvania State University on Cook's Distance](https://online.stat.psu.edu/stat462/node/173/)) in the chunk below to detect and then remove outliers.
+
+```{r ols_no_outliers}
+cooksD <- cooks.distance(textLM) # calculate Cook's Distance metric for each point in the textLM linear regression model
+cooksD_threshold <- 4/nrow(modelDF) # threshold for highly influential (outlier) data points
+influential_obs <- which(cooksD > cooksD_threshold) # this returns the indices for outlier data points
+modelDF_no_outliers <- modelDF[-influential_obs, ] # we use the -vector convention to remove the entries (rows) that are outliers; this is an example of a subsetting operation
+```
+
+Next, we can re-run the model and see how the coefficients do or do not change.
+
+```{r ols_update}
+textLM_no_outliers <- update(textLM, data=modelDF_no_outliers) # I use the update command to re-run the linear model with the interaction effect (the last--immediately preceding--version of the textLM object) with the data.frame that has the outliers removed.
+clean_summary_DF <- summary(textLM_no_outliers)$coefficients
+row.names(clean_summary_DF) <- c("Intercept","Issue=Public lands","Sentiment","Followers (log scale)","Sentiment: Public lands")
+kable(clean_summary_DF,digits=2)
+```
+
+Note that when the outliers are removed, we see a very different pattern in the data. While none of the $\beta$ coefficient estimates are significant, we see interesting patterns in the estimate column nonetheless. The impact of followers on the number of likes trends toward significance ($p = 0.09$; typically the threshold for "trending toward significance" is 0.1) and gestures to a postive relationship where having more followers tends to enhance the number of likes a post receives (which makes sense, given how the social media algorithms farm out posts to people's timelines).
+
+On the other hand, we see a reversal for the coefficient estimate for sentiment. In general, more positive sentiment may be associated with more likes, though this relationship is not significantly different from 0. However, the sentiment:public lands interaction indicates that for public lands posts, more negative posts tend to receive more likes.
+
+In your bullet point outlines and final reports ([Assignments 2 and 3](https://ea30-fa20.github.io/ConsSocMedia/assignments.html)), I expect that you will include sections on your interpretation on your findings and recommendations for improving environmental social media communications and/or future work priorities for environmental social media communications research. 
+
+## Displaying model predictions graphically
+
+Finally, in this code section, I show how you can display the predictions of your linear model across the range of values you have observed for your predictor variables. This can provide added insight, even if the coefficient estimates are not significantly different from 0 ($H_{0,i}$ cannot be rejected for $\beta_i$). We can at least discern if there are tendencies or trends emerging in the data and model. Note that a small sample size typically means that an effect must be that much larger to reach statistical significance--this is due to smaller datasets typically having a larger ratio of noise:signal (reflected in larger values of standard errors for each coefficient estimate).
+
+The plot below shows how to use `plot` and `points` to display the predictions of `textLM_no_outliers` for the variable Sentiment and break up your observations between two issues (or two platforms). You could adapt/extend this code to cover cases where you have multiple issues (3+) or sites (3+).
+
+```{r plot_final_ols}
+## 1: Generate model predictions
+pred_ys <- exp(predict(textLM_no_outliers))-1
+  # We exponentiate the predictions because we log-transformed the number of Likes originally
+  # This ensures that the predictions are on the same scale as the observed number of Likes in this dataset (rather than on a log-transformed scale)
+
+## 2: Plot the predictions for sentiment
+  # 2.1: We first find the indices for the observations that correspond to climate action
+climate_action_indices <- which(modelDF_no_outliers$Issue=="Climate action")
+  # 2.2: Next we instantiate a plot for just the climate action posts and model predictions
+plot(modelDF_no_outliers$Sentiment[climate_action_indices],pred_ys[climate_action_indices],
+     bty="L", # change the box type of the plot
+     pch=19, # use closed circles as point symbols
+     col=scales::alpha("blue",0.8), # use some transparency for the points to be able to see overplotted points
+     xlab="Sentiment",
+     ylab="Number of likes")
+points(modelDF_no_outliers$Sentiment[-climate_action_indices],pred_ys[-climate_action_indices],pch=19,col=scales::alpha("forestgreen",0.6)) # this command adds points for the public lands posts; this works because this dataset has only either Climate action or Public lands posts. 
+legend("topleft", # legend location argument - top left of plot
+       legend=c("Climate","Public lands"), # labels to display describing your (categories) of data
+       col=c("blue","forestgreen"), # colors differentiating your categories (how would you do this for different line symbols or point symbols if you kept the colors the same otherwise?)
+       pch=c(19,19), # display closed-circle points for both categories
+       bty="n") # do not include a box around the legend
+  # How would you modify this code if you had 3+ issues or were comparing the same issue across sites?
+  # Note that you can move the legend around in your plots by specifying different position arguments (e.g. "topright","bottomleft", etc.) or even giving values for x and y positions within the plotting range.
+```
+
+Oh shoot! We can't see the predictions for public lands posts, which should be shown in \textcolor{forestgreen}{forestgreen}. What could be the source of this issue? 
+
+If we look back at the `xyplots` outputs from before, we can see that the public lands posts tended to have a different range of values for sentiment (`X`) and likes (`Y`). You can always see what the range of values are for some particular variable by using the subsetting operation and the `range` or `summary` functions, e.g.:
+
+* `range(modelDF_no_outliers$Sentiment[-climate_action_indices])`: This tells us how we would need to modify the x-axis limits (`xlim`)
+* `range(pred_ys[-climate_action_indices])`: Ditto for y-axis
+
+```{r plot_extend_range}
+plot(modelDF_no_outliers$Sentiment[climate_action_indices],pred_ys[climate_action_indices],
+     bty="L", # change the box type of the plot
+     pch=19, # use closed circles as point symbols
+     col=scales::alpha("blue",0.8), # use some transparency for the points to be able to see overplotted points
+     xlab="Sentiment",
+     ylab="Number of likes",
+     xlim=c(-1,1),ylim=c(1,100)) # ok! We need to expand the range of the x and y-axes
+points(modelDF_no_outliers$Sentiment[-climate_action_indices],pred_ys[-climate_action_indices],pch=19,col=scales::alpha("forestgreen",0.6))
+legend("topleft",legend=c("Climate","Public lands"),col=c("blue","forestgreen"),pch=c(19,19),bty="n")
+```
+
