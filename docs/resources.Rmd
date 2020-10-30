@@ -18,7 +18,7 @@ The list below links to all of the slides, videos, and code that can help you co
 * Ensuring access to your Google account in `RStudio Server`
 * Copy the [social media data gathering template](https://docs.google.com/spreadsheets/d/1hQy8kR81GHmMDPivpyd8XzAGU7A6oUCUArq1bltm5EQ/edit?usp=sharing) into your own Google account
 * Similarly, you can inspect the [example dataset that I created](https://docs.google.com/spreadsheets/d/1K-tgni6JJ33x1mG-rxNFopnC8sBuRzVLd5loBO0e1jk/edit?usp=sharing).
-    + The [Example page](https://ea30-fa20.github.io/ConsSocMedia/Project3.html) includes a fully worked example using this dataset, starting with reading the data into `RStudio Server`, cleaning the text data, performing a linear regression, and includes (completely optional extensions on) outlier removal, visualizing model predictions with plots (instead of tables), and including interaction effects.
+    + The [Example tab](https://ea30-fa20.github.io/ConsSocMedia/Project3.html) includes a fully worked example using this dataset, starting with reading the data into `RStudio Server`, cleaning the text data, performing a linear regression, and includes (completely optional extensions on) outlier removal, visualizing model predictions with plots (instead of tables), and including interaction effects.
 * You will create your own social media dataset focused on an environmental issue. Please pay special attention to any curation/selection/filtering that you do to come up with focused search terms to generate a set of posts that discuss clearly related topics.
     + [VidGrid explainer on some elements to consider when constructing your social media dataset](https://app.vidgrid.com/content/eueB3RlvI1k4)
 
@@ -26,7 +26,7 @@ The list below links to all of the slides, videos, and code that can help you co
 
 * [Week 1 slides focused on authenticating access to Google accounts in `RStudio Server`](https://rpubs.com/chchang47/ea30proj3s1)
     + [Video explainer link](https://app.vidgrid.com/content/eueB3RlvI1k4)
-    + [Link to the `.Rpres` (markdown format) file that generated the slides](https://github.com/EA30-FA20/ConsSocMedia/blob/main/slides/Week1.Rpres); this may be useful if you'd like to copy over code (but note that the [Example page](https://ea30-fa20.github.io/ConsSocMedia/Project3.html) also contains this code in Section 1 of the document.)
+    + [Link to the `.Rpres` (markdown format) file that generated the slides](https://github.com/EA30-FA20/ConsSocMedia/blob/main/slides/Week1.Rpres); this may be useful if you'd like to copy over code (but note that the [Example tab](https://ea30-fa20.github.io/ConsSocMedia/Project3.html) also contains this code in Section 1 of the document.)
 * [Code snippet to copy over into your console](https://ea30-fa20.github.io/ConsSocMedia/Project3.html) - copy over the first code chunk into your `RStudio Server` console
     + First, I suggest starting a new session in `RStudio Server`. This is just nice to ensure that your previous workspace/variables are cordoned off from this new project.
     + Click the `r fontawesome::fa("home")` icon on the top-right to navigate to your user space
@@ -43,6 +43,7 @@ The list below links to all of the slides, videos, and code that can help you co
 
 * The [code folder](https://github.com/EA30-FA20/ConsSocMedia/tree/main/code) contains snippets of code and a template RMarkdown file that may be helpful in making progress in this project.
 * For assignments 2 and 3, note that in the `code` folder, the `Template2.Rmd` file is provided as a starting point.
-* Note that the code revisits many elements of the [Project 3 page](https://ea30-fa20.github.io/ConsSocMedia/Project3.html)
+* Note that the code revisits many elements of the [example tab](https://ea30-fa20.github.io/ConsSocMedia/Project3.html)
+* You can find the [`RMarkdown` file that generated the `example` tab here](https://github.com/EA30-FA20/ConsSocMedia/blob/main/docs/Project3.Rmd); this file may provide code that you would like to copy over to your own document.
 
 
