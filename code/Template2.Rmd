@@ -1,0 +1,92 @@
+---
+title: "RMarkdown template for assignments 2 (and 3)"
+author: "Your Name"
+date: "`r Sys.Date()`"
+output: word_document
+---
+
+
+```{r setup, include=FALSE}
+### NB (Nota bene): This initial code chunk contains any and all packages and package options that will be used in this project
+knitr::opts_chunk$set(echo = FALSE, message=FALSE) # by default, when you knit this file (which will default knit to Word), you will not see the commands or warning messages echoed.
+
+### Loading packages
+  # When I use external packages that aren't "base R", I load them into the workspace here with the library(package name) command.
+library(tidyverse) # load the Tidyverse set of packages that supplement base R functionalities like data.frame, reading in spreadsheet data (read_csv, etc.)
+library(googlesheets4) # package that provides a convenient interface in R to interact with Google spreadsheets
+library(knitr) # this is the package that knits Rmarkdown files to HTML, Word, or PDF; we'll be using the kable() function in this package to make nice tables for Word
+library(vader) # this is the package we will be using for sentiment analysis
+library(tidytext) # this is the package we will use for wrangling text data
+library(stringr) # package with helpful functions dealing with string, or character/text data.
+library(tokenizers) # package to split strings into smaller entities (e.g. messages into words, ngrams, or individual letters)
+library(lattice) # package that extends base R plot visualizations
+library(Hmisc) # package that has helpful visualization tools for our data
+
+  # Package options
+options(gargle_oauth_email="YOUREMAIL@gmail.com") # this lets RMarkdown knit successfully by using your stored token for your Google account. PLEASE MAKE SURE that you change this to your email account.
+```
+
+
+* Background
+    + Why is this environmental issue important?
+    + What is the current state of public awareness, discourse, deliberation, voting preferences, or some other public behavior toward this issue?
+        - If appropriate, please feel free to include citations in your bullet point outline
+    + Why have you chosen your combination of issue(s) and/or site(s)?
+    + What question do you seek to answer with your data? (What are your hypotheses? Why are they important/useful?) How will your insights improve environmental communication practices on social media?
+* Analysis
+    + What variables do you plan to examine? If the variables are ones that you have created (e.g. your own metric of virality or persuasive force), why did you choose to create this variable and how did you operationalize it into a metric that you could apply in a standardized way across your posts?
+    + Brief description of data
+    + Description of planned analyses
+* Interpretation
+    + What do you expect to find? (This may reiterate your alternative hypothesis - no worries.)
+    + How do you plan to interpret your findings? What outputs will you use from your statistical models? What does a positive or negative coefficient estimate mean? *OR*: Describe your findings and interpret them.
+
+While this is not necessary for your outline, to make smooth progress toward 1) analyzing your data, 2) describing your interpretations (so that we can provide more helpful feedback), and 3) developing conclusions based on your findings, I highly recommend that you have analyzed your data by the time you submit Assignment 2 for Project 3. Again, you do not need to include these analyses and can describe them hypothetically. However, if you have initial findings, we will be able to provide more helpful, informed feedback.
+
+```{r reading_in_data}
+envDF <- googlesheets4::read_sheet("https://docs.google.com/spreadsheets/d/1K-tgni6JJ33x1mG-rxNFopnC8sBuRzVLd5loBO0e1jk/edit?usp=sharing") # provide the sharing link to your own spreadsheet here to modify this code for your project.
+```
+
+```{r processing_text_data}
+envDF_tidy <- envDF %>% # using the pipe operator to pass the previous command/object forward to the next command; the outputs of this data cleaning will be stored in a data.frame entitled envDF_tidy (environmental data.frame that is tidy)
+  mutate(Text=str_replace_all(Text,"http.*\\s*|&amp;|&lt;|&gt;|RT|@|#|\\n|\\*", "")) %>% # creating a cleaned data column with the str_replace_all find and replace operator
+  mutate(Text=str_replace_all(Text,"&","and")) %>% # replacing ampersands (&) with and
+  mutate(Text=gsub("\"", "",Text)) %>% # getting weird of awkward "\" quotation mark
+  mutate(Text=trimws(Text)) # removing any excess spaces trailing or leading the string
+```
+
+```{r creating_numeric_representation_of_text_data}
+  # While the Project 3 example page (https://ea30-fa20.github.io/ConsSocMedia/Project3.html) contains other ways to convert your text data to some numeric variable (e.g. sentiment, number of unique words, number/proportion of post that is hashtags, etc.), let's say that you have decided that you are interested in the length of posts as a predictor variable for public engagement. You choose to operationalize this as the number of unique words in each post.
+
+post_words <- tokenize_tweets(envDF$Text,strip_url=TRUE) # this creates a list where each entry has the message broken into individual words, using spaces as the breaks between individual words; don't worry about it being called "tokenize_tweets" -- this function is fine to use on other social media (text) posts
+    # you can see any individual entry by using the [[]] index operator for lists; e.g. post_words[[4]]
+post_length <- unlist( lapply(post_words, length) ) # this gives you the length of each post in terms of the number of words it contains
+post_unique_words <- unlist( lapply(post_words, function(x) {length(unique(x))})) # number of unique words per post.
+  # NB: length(post_unique_words) is always <= (less than/equal to) length(post_length)
+```
+
+```{r modelDF}
+# Subsequently, following my workflow, I recommend creating a dedicated data.frame to store the variables for your linear regression model
+
+## Creating model data.frame
+modelDF <- data.frame("Issue"=factor(envDF_tidy$Issue),
+                      "UniqueWords" = post_unique__words,
+                      "logRTs"=log(envDF_tidy$RTs+1)) # You can extend this to include other columns of your choosing; see the example tab for other column names that I specified for the sample dataset.
+```
+
+```{r modelDF_hist}
+## While this may not be included in your final report or even Assignment 2, this can be helpful for you in thinking about which variables may be unacceptably skewed.
+hist.data.frame(modelDF, nclass=5) # the nclass option tells this function how many bins to have for the numeric variables.
+```
+
+```{r ols_initial}
+textLM <- lm(logRTs~Issue+UniqueWords, data=modelDF)
+clean_summary_DF <- summary(textLM)$coefficients # creating a data.frame to store the coefficient estimates from the summary() function 
+row.names(clean_summary_DF) <- c("Intercept","Issue=XYZ","Unique words in post") # creating nicer row names, where each row name denotes one of the variables in the model
+kable(clean_summary_DF,digits=2) # using the kable function because this ensures that your output tables can play nicely with Word outputs. 
+```
+
+* Conclusion: Implications for environmental communications
+    + What are your take-aways from your analysis?
+    + What recommendations do you have for improving environmental communication based on your data? (Even if your results are all non-significant, that is fine. From exploring these data in a more systematic way, what are your new insights for environmental advocates?)
+    + What would you prioritize in terms of future research efforts in the realm of environmental communication?

@@ -4,7 +4,7 @@ author: "Charlotte Chang"
 date: "`r Sys.Date()`"
 output:
   html_document:
-    number_sections: true
+    number_sections: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -22,10 +22,6 @@ library(stringr) # package with helpful functions dealing with string, or charac
 library(tokenizers) # package to split strings into smaller entities (e.g. messages into words, ngrams, or individual letters)
 library(lattice) # package that extends base R plot visualizations
 library(Hmisc) # package that has helpful visualization tools for our data
-
-  # Package options
-options(gargle_oauth_email="c.h.w.chang@gmail.com") # default to "out-of-band" authentication for googlesheets4. TL;DR for this is that port 1410 which googlesheets4 uses to perform the authentication with Google's API (Application Programming Interface) is closed to external traffic on RStudio Server.
-  # No problem though! The "out-of-band" authentication seamlessly just redirects any authentication requests to your local computer (and it will just pop up another tab in your internet browser)
 ```
 
 # Code to set up access to your Google account in `RStudio Server`
@@ -95,9 +91,15 @@ envDF_tidy <- envDF %>% # using the pipe operator to pass the previous command/o
 
 Now that we have completed this cleaning operation, we can compare the first five posts of the uncleaned vs. cleaned `Text` columns. 
 
-First 5 entries in the uncleaned `Text` column: `r print(envDF$Text[1:5])`
+First 5 entries in the uncleaned `Text` column: 
+```{r}
+print(envDF$Text[1:5])
+```
 
-First 5 entries in the cleaned `Text` column: `r print(envDF_tidy$Text[1:5])`
+First 5 entries in the cleaned `Text` column:
+```{r}
+print(envDF_tidy$Text[1:5])
+```
 
 # Creating variables based on your text data for analyses
 

@@ -11,7 +11,7 @@ To ensure that you can make progress on this interdisciplinary laboratory projec
 
 # Assignment 1
 
-In this mini-report (1-3 pages), you will **describe your dataset and hypotheses**. This report is intended to help you progress toward a) identifying a tractable and interesting research question and b) gathering sufficient data in a principled fashion.
+In this mini-report (1-3 pages), you will **describe your dataset and hypotheses**. This report is intended to help you progress toward a) identifying a tractable and interesting research question and b) gathering sufficient data in a principled fashion. [Sakai submission link here](https://sakai.claremont.edu/portal/directtool/6f876ffd-122b-4772-9fe9-66b4e82a1667/). **Due 11/13 at midnight.** [Example template for assignment 1 here.](https://github.com/EA30-FA20/ConsSocMedia/blob/main/code/Template1.Rmd)
 
 *Notes on terms*
 
@@ -34,7 +34,7 @@ To perform this assignment, you will:
 
 ## Rubric
 
-This assignment will be worth $30$ points.
+This assignment will be worth 30 points.
 
 * Data quantity - please provide a shared link to your Google sheet for your data:
     + 0-1 points: No or very few posts collected with substantial data quality issues (<10)
@@ -70,7 +70,7 @@ This assignment will be worth $30$ points.
     
 # Assignment 2
 
-You will create a succinct and clear outline to make progress toward your lab report. Note that this document will be graded for participation. However, Marc and I will be able to provide more helpful comments if you are careful and clear in your outline. There is no need to be excessively wordy with your outline. Nonetheless, if we do not understand an assumption that you have made, we will not be able to provide very helpful feedback if you build on that assumption in your analyses or some other component of your report.
+You will create a succinct and clear outline to make progress toward your lab report. Note that this document will be graded for participation. However, Marc and I will be able to provide more helpful comments if you are careful and clear in your outline. There is no need to be excessively wordy with your outline. Nonetheless, if we do not understand an assumption that you have made, we will not be able to provide very helpful feedback if you build on that assumption in your analyses or some other component of your report. [Sakai submission link](https://sakai.claremont.edu/portal/directtool/6f876ffd-122b-4772-9fe9-66b4e82a1667/), due **11/20 at midnight.** [Example template here with some scratch `R` code to analyze your dataset.](https://github.com/EA30-FA20/ConsSocMedia/blob/main/code/Template2.Rmd)
 
 ## Suggested outline structure
 
@@ -100,7 +100,7 @@ You will receive 10 points if you submit your outline in a timely fashion. Note 
 
 # Final assignment
 
-You will write a technical report (5 page limit) describing your findings on environmental social media communications. You will conclude your report with recommendations for future research and/or recommendations for communications focused on that topic.
+You will write a technical report (5 page limit) describing your findings on environmental social media communications. You will conclude your report with recommendations for future research and/or recommendations for communications focused on that topic. [Sakai submission link](https://sakai.claremont.edu/portal/directtool/6f876ffd-122b-4772-9fe9-66b4e82a1667/) - due **12/4 at midnight**.
 
 The final assignment will be a total of $60$ points. For the analysis, you are welcome to include a plot if you would like, or you can report the coefficients of your model in a table or in text.
 

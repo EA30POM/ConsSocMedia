@@ -397,7 +397,19 @@ enviro_soc_media_DF &lt;- googlesheets4::read_sheet(&quot;https://docs.google.co
   mutate(Text=trimws(Text)) # removing any excess spaces trailing or leading the string</code></pre>
 <p>Now that we have completed this cleaning operation, we can compare the first five posts of the uncleaned vs. cleaned <code>Text</code> columns.</p>
 <p>First 5 entries in the uncleaned <code>Text</code> column:</p>
+<pre class="r"><code>print(envDF$Text[1:5])</code></pre>
+<pre><code>## [1] &quot;That sentiment could be said about EVERY generation. People of ALL generations fight for climate change. We can praise the climate kids without insulting others. Tomorrow is NOT promised for anyone. #StrongerTogether&quot;                     
+## [2] &quot;Petition: Declare a Climate Emergency, end fossil fuel use and build community resilience. https://petition.parliament.uk/petitions/2260&quot;                                                                                                     
+## [3] &quot;All I want for Christmas is meaningful climate action. At the scale and pace necessary. Given Santa&#39;s neighborhood, I imagine he does too.&quot;                                                                                                   
+## [4] &quot;Okay, politicians, I’ll believe you’re serious about climate action when you stop telling me “it’s time to fight climate change” and start telling me “it’s time to fight the fossil fuel industry.”&quot;                                         
+## [5] &quot;You just want to stand with your right wing buddy and the difficult time you talk of is being both found out. \nServes you both right for being climate change deniers and putting profits before people, both incompetent and useless liars.&quot;</code></pre>
 <p>First 5 entries in the cleaned <code>Text</code> column:</p>
+<pre class="r"><code>print(envDF_tidy$Text[1:5])</code></pre>
+<pre><code>## [1] &quot;That sentiment could be said about EVERY generation. People of ALL generations fight for climate change. We can praise the climate kids without insulting others. Tomorrow is NOT promised for anyone. StrongerTogether&quot;                    
+## [2] &quot;Petition: Declare a Climate Emergency, end fossil fuel use and build community resilience.&quot;                                                                                                                                                 
+## [3] &quot;All I want for Christmas is meaningful climate action. At the scale and pace necessary. Given Santa&#39;s neighborhood, I imagine he does too.&quot;                                                                                                 
+## [4] &quot;Okay, politicians, I’ll believe you’re serious about climate action when you stop telling me “it’s time to fight climate change” and start telling me “it’s time to fight the fossil fuel industry.”&quot;                                       
+## [5] &quot;You just want to stand with your right wing buddy and the difficult time you talk of is being both found out. Serves you both right for being climate change deniers and putting profits before people, both incompetent and useless liars.&quot;</code></pre>
 </div>
 </div>
 <div id="creating-variables-based-on-your-text-data-for-analyses" class="section level1" number="3">

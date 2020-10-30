@@ -1,0 +1,68 @@
+---
+title: "RMarkdown template for assignment 1"
+author: "Your Name"
+date: "`r Sys.Date()`"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+### NB (Nota bene): This initial code chunk contains any and all packages and package options that will be used in this project
+knitr::opts_chunk$set(echo = FALSE, message=FALSE) # by default, when you knit this file (which will default knit to Word), you will not see the commands or warning messages echoed.
+
+### Loading packages
+  # When I use external packages that aren't "base R", I load them into the workspace here with the library(package name) command.
+library(tidyverse) # load the Tidyverse set of packages that supplement base R functionalities like data.frame, reading in spreadsheet data (read_csv, etc.)
+library(googlesheets4) # package that provides a convenient interface in R to interact with Google spreadsheets
+library(knitr) # this is the package that knits Rmarkdown files to HTML, Word, or PDF; we'll be using the kable() function in this package to make nice tables for Word
+library(vader) # this is the package we will be using for sentiment analysis
+library(tidytext) # this is the package we will use for wrangling text data
+library(stringr) # package with helpful functions dealing with string, or character/text data.
+library(tokenizers) # package to split strings into smaller entities (e.g. messages into words, ngrams, or individual letters)
+library(lattice) # package that extends base R plot visualizations
+library(Hmisc) # package that has helpful visualization tools for our data
+
+  # Package options
+options(gargle_oauth_email="YOUREMAIL@gmail.com") # this lets RMarkdown knit successfully by using your stored token for your Google account. PLEASE MAKE SURE that you change this to your email account.
+```
+
+# Issue(s)
+
+*NB: you can rename this section header to your issue(s)*
+
+Issue XYZ is a prominent challenge...
+I chose/I focused on issues ...
+
+## Role of public mobilization for issue(s)
+
+Issue XYZ relies on public funding/voting/... as such, voter mobilization/citizen science/public engagement is critical to ...
+
+# Hypotheses
+
+For issue(s) XYZ, I will be testing ...
+
+# Data search and curation process
+
+To advance environmental social media communications on ISSUE(S) X (replace with your issue), I focused on the following search terms:
+
+* Search term 1
+* Search term 2
+* .. Search term j
+
+Initially, I started with a longer set of search terms / fewer search terms (`term 1, term 2, term 3...term M`). However, I realized that these terms / the data that these terms yielded .../These terms produced posts that deviated from Issue XYZ in ... these ways. As such, I iteratively identified the search terms above as the final set of terms to source posts clearly focused on Issue XYZ.
+
+I chose site(s) ABC because ... Instagram is a major site for a current public awareness campaign/Twitter discourse is driving opinion formation on Issue XYZ/Facebook is ... (Other sites are also OK, but must feature meaningful text data to meet this project's requirements.)
+
+## Interacting with dataset
+
+Below, I show the first six rows of my environmental social media dataset, focused on issue X (replace with your own issue). The subsequent section describes the columns in my data.
+
+```{r read_envDF}
+envDF <- googlesheets4::read_sheet("https://docs.google.com/spreadsheets/d/1K-tgni6JJ33x1mG-rxNFopnC8sBuRzVLd5loBO0e1jk/edit?usp=sharing") # provide the sharing link to your own spreadsheet here to modify this code for your project.
+
+head(envDF)
+```
+
+* Column 1: This column presents variable 1
+* Column 2: Variable 2
+* Column n: Variable n
+

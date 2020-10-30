@@ -9,6 +9,12 @@ navbar:
     - text: "Assignments"
       icon: fa-file-alt
       href: assignments.html
+    - text: "Resources"
+      icon: fa-question-circle
+      href: resources.html
+    - text: "Example"
+      icon: fa-code
+      href: Project3.html
 output:
   html_document:
     theme: flatly
