@@ -83,7 +83,11 @@ If you are interested in representing your text in a different way than what I h
 
 **Reaching out on Slack**
 
-Ultimately, if you are hitting a wall and have tried working your way through these checklists and suggestions above, please reach out on Slack. The iterative process of trying to debug code or write new code and hitting a roadblock **then** seeking feedback is highly effective to gain confidence and skills. By trying out different solutions first then seeking feedback, you will make more progress in scientific computing by building your own logical map of `R`, paths to overcome errors, and strategies to build on textbook or open-source code examples to adapt existing code to your own use cases. Note that I don't have a prescriptive time limit for trying first then seeking help.
+Ultimately, if you are hitting a wall and have tried working your way through these checklists and suggestions above, please reach out on Slack. The iterative process of trying to debug code or write new code and hitting a roadblock **then** seeking feedback is highly effective to gain confidence and skills. By trying out different solutions first then seeking feedback, you will make more progress in scientific computing by building your own logical map of `R`, paths to overcome errors, and strategies to build on textbook or open-source code examples to adapt existing code to your own use cases. 
+
+Note that I don't have a prescriptive time limit for trying first then seeking help (if you go through the checklist/work through different ideas quickly then seek help, that's fine - there is no minimum amount of time I expect you to invest, but I ask that you put in the work, even if it goes quickly, of exploring/debugging your code). 
+
+I will prioritize responding to your questions in a timely fashion Mondays-Thursdays. I check Slack and email irregularly on Fridays and the weekends.
 
 # Syllabus for Theme 3 in EA 30
 
