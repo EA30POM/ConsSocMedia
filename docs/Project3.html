@@ -15,7 +15,6 @@
 
 <title>Fully worked example for Project 3</title>
 
-<script src="site_libs/header-attrs-2.3/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -324,15 +323,15 @@ $(document).ready(function () {
 </div>
 
 
-<div id="code-to-set-up-access-to-your-google-account-in-rstudio-server" class="section level1" number="1">
-<h1 number="1"><span class="header-section-number">1</span> Code to set up access to your Google account in <code>RStudio Server</code></h1>
-<p><strong>Please run this code in your console.</strong> This code reproduces the instructions in the <a href="https://rpubs.com/chchang47/ea30proj3s1">instruction slides for Week 1</a> of this project (no worries if you get around to doing this on week 2, starting 11/9).</p>
+<div id="code-to-set-up-access-to-your-google-account-in-rstudio-server" class="section level1">
+<h1><span class="header-section-number">1</span> Code to set up access to your Google account in <code>RStudio Server</code></h1>
+<p><strong>Please run this code in your console.</strong> This code reproduces the instructions in the <a href="https://rpubs.com/chchang47/ea30proj3s1">instruction slides for Week 1</a> (<a href="https://use.vg/qq0l0fb95OnM">Video explainer</a>) of this project (no worries if you get around to doing this on week 2, starting 11/9). <strong>You only need to run this code once</strong>.</p>
 <pre class="r"><code>library(googlesheets4)
 options(gargle_oob_default = TRUE) # this sets up an option for you to authenticate in your local browser rather than through the RStudio Server, which does not permit certain communication protocols; if you run this locally, you do not need to include this line
 enviro_soc_media_DF &lt;- googlesheets4::read_sheet(&quot;https://docs.google.com/spreadsheets/d/1hQy8kR81GHmMDPivpyd8XzAGU7A6oUCUArq1bltm5EQ/edit?usp=sharing&quot;)</code></pre>
 </div>
-<div id="reading-in-your-environmental-social-media-data" class="section level1" number="2">
-<h1 number="2"><span class="header-section-number">2</span> Reading in your environmental social media data</h1>
+<div id="reading-in-your-environmental-social-media-data" class="section level1">
+<h1><span class="header-section-number">2</span> Reading in your environmental social media data</h1>
 <p>In the code chunk below, you will see how to use the function <code>read_sheet</code> from the package <code>googlesheets4</code> (called using <code>googlesheets4::read_sheet</code>) to query and download a Google sheet into the <code>R</code> workspace.</p>
 <p>I am reading in the <a href="https://docs.google.com/spreadsheets/d/1K-tgni6JJ33x1mG-rxNFopnC8sBuRzVLd5loBO0e1jk/edit?usp=sharing">sample environmental social media Google sheet</a> and storing it in a variable called <code>envDF</code>, short for <code>environmental data.frame</code>.</p>
 <pre class="r"><code>envDF &lt;- googlesheets4::read_sheet(&quot;https://docs.google.com/spreadsheets/d/1K-tgni6JJ33x1mG-rxNFopnC8sBuRzVLd5loBO0e1jk/edit?usp=sharing&quot;) # provide the sharing link to your own spreadsheet here to modify this code for your project.</code></pre>
@@ -386,8 +385,8 @@ enviro_soc_media_DF &lt;- googlesheets4::read_sheet(&quot;https://docs.google.co
 </ul></li>
 </ul>
 <p>Note that in this example, I am comparing two issues on the same site–Climate action and Public lands discourse (variable: Issue) on Twitter. In this project, you will have one (or more, but more is not necessary) categorical variable. That variable can either be <code>Issue</code>, in the case where you compare 2+ issues discussed on the same site, or <code>Site</code>, in the case where you compare the same issue discussed across 2+ sites (platforms).</p>
-<div id="cleaning-your-text-data" class="section level2" number="2.1">
-<h2 number="2.1"><span class="header-section-number">2.1</span> Cleaning your text data</h2>
+<div id="cleaning-your-text-data" class="section level2">
+<h2><span class="header-section-number">2.1</span> Cleaning your text data</h2>
 <p>The code below demonstrates how to use a variety of functions to clean your text data by removing the <code>#</code> or <code>@</code> symbol, URL links, etc. I use the <code>mutate</code> function to create new variables by applying transformations to existing columns in <code>envDF</code>, namely the column <code>Text</code> (<code>envDF$Text</code>), which stores each post (text/tweet).</p>
 <p>I create a cleaned version of the <code>Text</code> column by using the <code>str_replace_all</code> (string replace all, like find and replace) function to replace any instances of unwanted strings and replace them with blank space or “and” (in the case of <code>&amp;</code>). I also use <code>gsub</code> to perform an additional find &amp; replace operation for dangling, awkward quotation marks (my guess is that these weird <code>"\"</code> marks arise from folks writing messages in English on non-US/non-UK keyboards, such as a French keyboard, so that the underlying character is depicted differently).</p>
 <pre class="r"><code>envDF_tidy &lt;- envDF %&gt;% # using the pipe operator to pass the previous command/object forward to the next command; the outputs of this data cleaning will be stored in a data.frame entitled envDF_tidy (environmental data.frame that is tidy)
@@ -412,8 +411,8 @@ enviro_soc_media_DF &lt;- googlesheets4::read_sheet(&quot;https://docs.google.co
 ## [5] &quot;You just want to stand with your right wing buddy and the difficult time you talk of is being both found out. Serves you both right for being climate change deniers and putting profits before people, both incompetent and useless liars.&quot;</code></pre>
 </div>
 </div>
-<div id="creating-variables-based-on-your-text-data-for-analyses" class="section level1" number="3">
-<h1 number="3"><span class="header-section-number">3</span> Creating variables based on your text data for analyses</h1>
+<div id="creating-variables-based-on-your-text-data-for-analyses" class="section level1">
+<h1><span class="header-section-number">3</span> Creating variables based on your text data for analyses</h1>
 <p>At present, we have a cleaned <code>Text</code> column and any other variables that you have chosen to input alongside the required columns (e.g. link to the post is one required field; the site, or which social media platform sourced the data, is another). Now we are going to move forward on converting the social media text data into a form that is amenable to statistical analysis.</p>
 <p>Remember that the goal of this project is for you to think creatively about how environmental advocates, such as citizen science recruiting teams or political mobilization teams for land conservation or climate action/decarbonization ballot measures, could improve their digital messaging strategies by “crowd-sourcing” insight from public social media discourse.</p>
 <p>As such, you will decide on some response variable. This could be something like measures of public engagement (e.g. retweets/shares/likes) or a measure you develop yourself (e.g. on a scale of 1-5, how appealing/motivating do I/do my friends find this message).</p>
@@ -429,8 +428,8 @@ head(sentiment_scores_DF[,3:6])</code></pre>
 ## 5   -0.866 0.081 0.653 0.267
 ## 6    0.296 0.048 0.952 0.000</code></pre>
 <p>In this project, you are required to analyze your environmental social media text data. The code above generates a <code>data.frame</code> containing sentiment scores, namely the proportion of each message that has positive (<code>pos</code>), negative (<code>neg</code>), and neutral (<code>neu</code>) terms, as well as a <code>compound</code> sentiment score that ranges from [-1, 1]. For the compound score, lower values (<code>compount</code> <span class="math inline">\(\rightarrow -1\)</span>) indicate negative sentiment.</p>
-<div id="alternative-variables-for-text-analysis" class="section level2" number="3.1">
-<h2 number="3.1"><span class="header-section-number">3.1</span> Alternative variables for text analysis</h2>
+<div id="alternative-variables-for-text-analysis" class="section level2">
+<h2><span class="header-section-number">3.1</span> Alternative variables for text analysis</h2>
 <p>For your datasets, you may be interested in the following ways to numerically represent your <code>Text</code> column:</p>
 <ul>
 <li>length of post or number of unique words</li>
@@ -450,8 +449,8 @@ norm_hashtags &lt;- num_hashtags/post_length # depending on how you want to calc
   # Note that this assumes that your site (platform) uses &quot;#&quot; to denote hashtags and &quot;@&quot; to tag users.</code></pre>
 </div>
 </div>
-<div id="identifying-hypotheses-and-running-a-linear-regression" class="section level1" number="4">
-<h1 number="4"><span class="header-section-number">4</span> Identifying hypotheses and running a linear regression</h1>
+<div id="identifying-hypotheses-and-running-a-linear-regression" class="section level1">
+<h1><span class="header-section-number">4</span> Identifying hypotheses and running a linear regression</h1>
 <p>With this example dataset, I will show you how to fit a linear regression using Ordinary Least Squares (OLS). Using this sample, I am fitting the model:</p>
 <p><span class="math inline">\(Y (\text{Public attention (Likes/Retweets)}) \sim \beta_0 + \beta_1 (\text{Issue}) + \beta_2 \text{Post Sentiment} + \beta_3 \text{Number of followers}\)</span></p>
 <p>This is an extension of the linear models that you ran in Project 1 for your climate blogs. In this linear model, I am testing several hypotheses. Note that <span class="math inline">\(H_0\)</span> denotes null and <span class="math inline">\(H_a\)</span> alternative hypothesis.</p>
@@ -475,8 +474,8 @@ norm_hashtags &lt;- num_hashtags/post_length # depending on how you want to calc
 <li>Null: There is no relationship between an author’s number of followers and a post’s number of Likes/Retweets</li>
 </ul></li>
 </ol>
-<div id="creating-a-data.frame-to-store-your-model-variables-and-addressing-any-issues-of-skewed-variables" class="section level2" number="4.1">
-<h2 number="4.1"><span class="header-section-number">4.1</span> Creating a <code>data.frame</code> to store your model variables and addressing any issues of skewed variables</h2>
+<div id="creating-a-data.frame-to-store-your-model-variables-and-addressing-any-issues-of-skewed-variables" class="section level2">
+<h2><span class="header-section-number">4.1</span> Creating a <code>data.frame</code> to store your model variables and addressing any issues of skewed variables</h2>
 <p>Below, I show how to fit this linear model using <code>lm</code>. I start by constructing a modeling <code>data.frame</code>. (This step isn’t necessary, but it can be nice to have a dedicated <code>data.frame</code> containing only the relevant variables for your linear models.)</p>
 <pre class="r"><code>## Creating model data.frame
 modelDF &lt;- data.frame(&quot;Sentiment&quot;=sentiment_scores_DF$compound,
@@ -512,8 +511,8 @@ modelDF$logRTs &lt;- log(modelDF$RTs + 1)</code></pre>
 <pre class="r"><code>  # As before, I leave it to you to modify the xyplot command to display logRTs on the y-axis if you would like to see that visualization.</code></pre>
 <p>Great! We see much more even distribution across the range of values for the log-transformed variables.</p>
 </div>
-<div id="fitting-an-ols-linear-regression" class="section level2" number="4.2">
-<h2 number="4.2"><span class="header-section-number">4.2</span> Fitting an OLS linear regression</h2>
+<div id="fitting-an-ols-linear-regression" class="section level2">
+<h2><span class="header-section-number">4.2</span> Fitting an OLS linear regression</h2>
 <p>The next code chunk shows how to specify the linear model described above in Section 3, which tests the various null hypotheses for the variables.</p>
 <pre class="r"><code>textLM &lt;- lm(logLikes~Issue+Sentiment+logFollowers, data=modelDF)
 clean_summary_DF &lt;- summary(textLM)$coefficients # creating a data.frame to store the coefficient estimates from the summary() function 
@@ -575,11 +574,11 @@ kable(clean_summary_DF,digits=2) # using the kable function because this ensures
 </ol>
 </div>
 </div>
-<div id="more-advanced-steps" class="section level1" number="5">
-<h1 number="5"><span class="header-section-number">5</span> More advanced steps</h1>
+<div id="more-advanced-steps" class="section level1">
+<h1><span class="header-section-number">5</span> More advanced steps</h1>
 <p>Below, I’ll initially set up a model with an interaction effect between Issue and Sentiment. This is informed by my observation of the two <code>xyplot</code>s above. I wondered if there were differing relationships between sentiment and attention (Likes/Retweets) for public lands versus climate action posts.</p>
-<div id="including-interaction-effects" class="section level2" number="5.1">
-<h2 number="5.1"><span class="header-section-number">5.1</span> Including interaction effects</h2>
+<div id="including-interaction-effects" class="section level2">
+<h2><span class="header-section-number">5.1</span> Including interaction effects</h2>
 <p>We now add on an additional covariate and thus null hypothesis, which is:</p>
 <p><span class="math inline">\(Y (\text{Public attention (Likes/Retweets)}) \sim \beta_0 + \beta_1 (\text{Issue}) + \beta_2 \text{Sentiment} + \beta_3 \text{Number of followers} + \beta_4 \text{Sentiment * Issue}\)</span></p>
 <p><span class="math inline">\(H_{0,4}: \beta_4 =0; H_{a,4}: \beta_4 \neq 0\)</span>; if we reject the null, then we conclude that there is a significant interaction effect between sentiment and issue on the dependent variable.</p>
@@ -637,8 +636,8 @@ kable(clean_summary_DF,digits=2)</code></pre>
 </table>
 <p>While we cannot reject the null hypothesis for the interaction effect between sentiment and issue, we do observe that it seems that sentiment has an indeterminate effect on the number of likes for posts in general. However, as the <span class="math inline">\(\beta_4\)</span> estimate has a more negative magnitude than <span class="math inline">\(\beta_2\)</span>, suggesting that for public lands posts, sentiment may be negatively related to the number of likes.</p>
 </div>
-<div id="removing-outliers" class="section level2" number="5.2">
-<h2 number="5.2"><span class="header-section-number">5.2</span> Removing outliers</h2>
+<div id="removing-outliers" class="section level2">
+<h2><span class="header-section-number">5.2</span> Removing outliers</h2>
 <p>The code below shows how to remove outliers (<a href="https://bookdown.org/ripberjt/qrmbook/ols-assumptions-and-simple-regression-diagnostics.html">background on outliers in the context of R linear regressions</a>) from your dataset based on the model itself. Remember that the <code>plot(textLM)</code> command would be one way to (informally) assess major deviations from the assumptions of linear regression.</p>
 <p>I show how to use Cook’s Distance (<a href="https://online.stat.psu.edu/stat462/node/173/">brief lecture from Pennsylvania State University on Cook’s Distance</a>) in the chunk below to detect and then remove outliers.</p>
 <pre class="r"><code>cooksD &lt;- cooks.distance(textLM) # calculate Cook&#39;s Distance metric for each point in the textLM linear regression model
@@ -702,8 +701,8 @@ kable(clean_summary_DF,digits=2)</code></pre>
 <p>On the other hand, we see a reversal for the coefficient estimate for sentiment. In general, more positive sentiment may be associated with more likes, though this relationship is not significantly different from 0. However, the sentiment:public lands interaction indicates that for public lands posts, more negative posts tend to receive more likes.</p>
 <p>In your bullet point outlines and final reports (<a href="https://ea30-fa20.github.io/ConsSocMedia/assignments.html">Assignments 2 and 3</a>), I expect that you will include sections on your interpretation on your findings and recommendations for improving environmental social media communications and/or future work priorities for environmental social media communications research.</p>
 </div>
-<div id="displaying-model-predictions-graphically" class="section level2" number="5.3">
-<h2 number="5.3"><span class="header-section-number">5.3</span> Displaying model predictions graphically</h2>
+<div id="displaying-model-predictions-graphically" class="section level2">
+<h2><span class="header-section-number">5.3</span> Displaying model predictions graphically</h2>
 <p>Finally, in this code section, I show how you can display the predictions of your linear model across the range of values you have observed for your predictor variables. This can provide added insight, even if the coefficient estimates are not significantly different from 0 (<span class="math inline">\(H_{0,i}\)</span> cannot be rejected for <span class="math inline">\(\beta_i\)</span>). We can at least discern if there are tendencies or trends emerging in the data and model. Note that a small sample size typically means that an effect must be that much larger to reach statistical significance–this is due to smaller datasets typically having a larger ratio of noise:signal (reflected in larger values of standard errors for each coefficient estimate).</p>
 <p>The plot below shows how to use <code>plot</code> and <code>points</code> to display the predictions of <code>textLM_no_outliers</code> for the variable Sentiment and break up your observations between two issues (or two platforms). You could adapt/extend this code to cover cases where you have multiple issues (3+) or sites (3+).</p>
 <pre class="r"><code>## 1: Generate model predictions
