@@ -46,13 +46,13 @@ As a starting point, you are welcome to focus on one or more of the following is
 
 ## Project milestones and assignments
 
-* [Assignment 1](https://EA30-FA20.github.io/ConsSocMedia/assignments.html): Describing your dataset and hypotheses (Section **1** in document)
+* [Assignment 1](https://EA30-FA20.github.io/ConsSocMedia/assignments.html): Describing your dataset and hypotheses (Section **2** in document)
     + Due: 11/13 at midnight
     + [Sakai submission link](https://sakai.claremont.edu/portal/directtool/6f876ffd-122b-4772-9fe9-66b4e82a1667/)
-* Assignment 2: (Bullet-point) outline for your report
+* Assignment 2: (Bullet-point) outline for your report (Section **3** in document)
     + Due: 11/20 at midnight
     + [Sakai submission link](https://sakai.claremont.edu/portal/directtool/6f876ffd-122b-4772-9fe9-66b4e82a1667/)
-* Final assignment: Lab report on environmental social media communications
+* Final assignment: Lab report on environmental social media communications (Section **4** in document)
     + Due: 12/4 at midnight
     + [Sakai submission link](https://sakai.claremont.edu/portal/directtool/6f876ffd-122b-4772-9fe9-66b4e82a1667/)
 
