@@ -22,11 +22,14 @@ library(stringr) # package with helpful functions dealing with string, or charac
 library(tokenizers) # package to split strings into smaller entities (e.g. messages into words, ngrams, or individual letters)
 library(lattice) # package that extends base R plot visualizations
 library(Hmisc) # package that has helpful visualization tools for our data
+
+  # Package options
+options(gargle_oauth_email="YOUREMAIL@gmail.com") # this lets RMarkdown knit successfully by using your stored token for your Google account. PLEASE MAKE SURE that you change this to your email account.
 ```
 
 # Code to set up access to your Google account in `RStudio Server`
 
-**Please run this code in your console.** This code reproduces the instructions in the [instruction slides for Week 1](https://rpubs.com/chchang47/ea30proj3s1) ([Video explainer](https://use.vg/qq0l0fb95OnM)) of this project (no worries if you get around to doing this on week 2, starting 11/9). **You only need to run this code once**.
+**Please run this code in your console - remove this section and the `google_setup` code chunk from your own Rmarkdown file if you adapt this file.** This code reproduces the instructions in the [instruction slides for Week 1](https://rpubs.com/chchang47/ea30proj3s1) ([Video explainer](https://use.vg/qq0l0fb95OnM)) of this project (no worries if you get around to doing this on week 2, starting 11/9). **You only need to run this code once**.
 
 ```{r google_setup, eval=FALSE}
 library(googlesheets4)
