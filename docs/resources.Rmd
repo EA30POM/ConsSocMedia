@@ -16,6 +16,7 @@ The list below links to all of the slides, videos, and code that can help you co
 * [Direct link to video walking through slides that show you how to grant access to your Google account in `RStudio Server`](https://use.vg/qq0l0fb95OnM)
     + [Link to slides](https://rpubs.com/chchang47/ea30proj3s1)
 * [Questions to keep in mind as you generate your environmental social media dataset](https://use.vg/OWOSdgA6wfjb)
+* [Additional background where I discuss the fully-worked example](https://use.vg/bx35BWwUHol0) - note that the video has chapter bookmarks (2nd icon from the top on the right-hand side)
 
 # Getting started
 
@@ -48,5 +49,6 @@ The list below links to all of the slides, videos, and code that can help you co
 * For assignments 2 and 3, note that in the `code` folder, the `Template2.Rmd` file is provided as a starting point.
 * Note that the code revisits many elements of the [example tab](https://ea30-fa20.github.io/ConsSocMedia/Project3.html)
 * You can find the [`RMarkdown` file that generated the `example` tab here](https://github.com/EA30-FA20/ConsSocMedia/blob/main/docs/Project3.Rmd); this file may provide code that you would like to copy over to your own document.
+* [More background where I discuss the fully-worked example and discuss interpretation of the multiple linear regression model](https://use.vg/bx35BWwUHol0)
 
 
